@@ -12,7 +12,26 @@ import {
   FaArrowUp,
 } from "react-icons/fa";
 
+
+
 const Footer: React.FC = () => {
+  const [showButton, setShowButton] = React.useState(false);
+
+React.useEffect(() => {
+  const handleScroll = () => {
+    setShowButton(window.scrollY > 300);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
   return (
     <footer className="relative bg-black text-white mt-16">
 
@@ -86,7 +105,7 @@ const Footer: React.FC = () => {
           {/* Company */}
           <div className="space-y-6 md:border-r md:border-gray-700 md:px-8">
             <h3 className="text-xl font-semibold">Company</h3>
-            <p className="text-gray-300 text-sm hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Business</p>
+            <p className="text-gray-300 text-sm hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Privacy and Polices</p>
           </div>
 
           {/* Newsletter */}
@@ -123,12 +142,15 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Scroll to Top Button */}
-      <button
-        type="button"
-        className="fixed bottom-6 right-6 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition"
-      >
-        <FaArrowUp />
-      </button>
+      {showButton && (
+  <button
+    type="button"
+    onClick={scrollToTop}
+    className="fixed bottom-6 right-6 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition"
+  >
+    <FaArrowUp />
+  </button>
+)}
     </footer>
   );
 };

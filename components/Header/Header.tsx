@@ -12,14 +12,36 @@ import {
 } from "react-icons/fa";
 import LoginModal from "../Login/LoginModal";
 import Link from "next/link";
-import { ArrowBigRight } from "lucide-react";
-import { IoIosArrowForward } from "react-icons/io";
 
-const Header: React.FC = () => {
+import { IoIosArrowForward } from "react-icons/io";
+import { fetchArticlesByCategoryId } from "@/lib/categoriesById";
+import SkeletonLoader from "./Skelton";
+import MegaContent from "./MegaContent";
+
+interface Category {
+  _id: string;
+  name: string;
+}
+
+interface HeaderProps {
+  categories: Category[];
+}
+
+const Header: React.FC<HeaderProps> = ({ categories }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // ===== MEGA MENU STATES =====
+  const [hoveredCat, setHoveredCat] = useState<string | null>(null);
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Cache store
+  const cacheRef = useRef<Record<string, any[]>>({});
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -37,6 +59,21 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setHoveredCat(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Date
   const today: Date = new Date();
 
   const formattedDate: string = today.toLocaleDateString("en-GB", {
@@ -50,6 +87,35 @@ const Header: React.FC = () => {
     setSelectedLang(lang);
     setIsLangOpen(false);
   };
+// hover
+ const handleHover = (categoryId: string) => {
+  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+  timeoutRef.current = setTimeout(async () => {
+    setHoveredCat(categoryId);
+
+    // ✅ If cached
+    if (cacheRef.current[categoryId]) {
+      setArticles(cacheRef.current[categoryId]);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const data = await fetchArticlesByCategoryId(categoryId);
+      const fetchedArticles = data || [];
+
+      cacheRef.current[categoryId] = fetchedArticles;
+      console.log(data)
+      setArticles(fetchedArticles);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, 200);
+};
   return (
     <>
       {/* ================= TOP BAR ================= */}
@@ -148,36 +214,62 @@ const Header: React.FC = () => {
       </div>
 
       {/* ================= NAVBAR ================= */}
-      <div className="sticky top-0 z-50 bg-black">
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between px-4">
-          {/* Menu */}
-          <ul className="flex items-center gap-6 text-white text-sm font-medium py-4">
-            {[
-              "HOME",
-              "INTERNATIONAL",
-              "INVESTING",
-              "FINANCE",
-              "SPORTS",
-              "ENTERTAINMENT",
-              "HEALTH",
-              "TECHNOLOGY",
-              "MORE",
-            ].map((item, index: number) => (
+      <div
+        ref={navRef}
+        onMouseLeave={() => {
+          timeoutRef.current = setTimeout(() => {
+            setHoveredCat(null);
+          }, 150);
+        }}
+        onMouseEnter={() => {
+          if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        }}
+        className="sticky top-0 z-50 bg-black relative"
+      >
+        <div className="w-full flex items-center justify-around">
+          <ul className="flex items-center gap-8 text-white text-sm font-semibold py-4 ">
+            <li className="relative group cursor-pointer">
+              <span className="group-hover:text-red-500">HOME</span>
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-red-500 group-hover:w-full transition-all duration-300"></span>
+            </li>
+
+            {categories.map((cat) => (
               <li
-                key={index}
-                className="flex items-center gap-2 cursor-pointer hover:text-red-500"
+                key={cat._id}
+                onMouseEnter={() => handleHover(cat._id)}
+                className="relative group cursor-pointer"
               >
-                {item}
-                <span className="text-gray-400"><IoIosArrowForward /></span>
+                <div className="flex items-center gap-1 group-hover:text-red-500">
+                  {cat.name.toUpperCase()}
+                  <IoIosArrowForward
+                    className={`transition-transform duration-300 ${
+                      hoveredCat === cat._id ? "rotate-90" : ""
+                    }`}
+                  />
+                </div>
+
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-red-500 group-hover:w-full transition-all duration-300"></span>
               </li>
             ))}
           </ul>
 
-          {/* Search */}
-          <div className="bg-gray-800 p-3 rounded-full text-white cursor-pointer">
+          <div className="bg-gray-800 p-3 rounded-full text-white hover:bg-red-500 transition">
             <FaSearch />
           </div>
         </div>
+
+        {/* GLOBAL DROPDOWN */}
+        {hoveredCat && (
+          <div className="absolute left-0 top-full w-full bg-white shadow-2xl animate-fadeIn">
+            <div className="max-w-[1200px] mx-auto p-8">
+              {loading ? (
+                <SkeletonLoader />
+              ) : (
+                <MegaContent articles={articles} />
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>

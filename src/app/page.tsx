@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaBolt } from "react-icons/fa";
 
+// Get articles type 
 type Article = {
   _id: string;
   headline: string;
@@ -15,7 +16,7 @@ type Article = {
     name: string;
   };
 };
-
+// API CALL FOR ARTICLES
 async function getArticles(): Promise<Article[]> {
   const res = await fetch(
     "https://project-epoverse-backend.onrender.com/api/articles",
