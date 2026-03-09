@@ -38,38 +38,38 @@ export default function LoginModal({ isOpen, onClose }: Props) {
     return Object.keys(newErrors).length === 0;
   };
 
-  //   const handleLogin = async () => {
-  //     if (!validate()) return;
+  const handleLogin = async () => {
+    if (!validate()) return;
 
-  //     try {
-  //       setLoading(true);
+    try {
+      setLoading(true);
 
-  //       const res = await fetch(
-  //         "https://project-epoverse-backend.onrender.com/api/auth/login",
-  //         {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify({ email, password }),
-  //         }
-  //       );
+      const res = await fetch(
+        "https://project-epoverse-backend.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        },
+      );
 
-  //       const data = await res.json();
+      const data = await res.json();
 
-  //       if (!res.ok) {
-  //         alert(data.message || "Login failed");
-  //         return;
-  //       }
+      if (!res.ok) {
+        alert(data.message || "Login failed");
+        return;
+      }
 
-  //       console.log("Login success:", data);
-  //       alert("Login successful!");
-  //       onClose();
-  //     } catch (err) {
-  //       console.error(err);
-  //       alert("Something went wrong");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+      console.log("Login success:", data);
+      alert("Login successful!");
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
