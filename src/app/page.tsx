@@ -1,36 +1,38 @@
+import { getArticles } from "@/services/articleService";
 import Image from "next/image";
 import Link from "next/link";
 import { FaBolt } from "react-icons/fa";
 
-// Get articles type 
-type Article = {
-  _id: string;
-  headline: string;
-  content: string;
-  image?: string;
-  thumbnail?: string;
-  slug: string;
-  status: string;
-  isLatest: boolean;
-  category: {
-    name: string;
-  };
-};
+// // Get articles type
+// type Article = {
+//   _id: string;
+//   headline: string;
+//   content: string;
+//   image?: string;
+//   thumbnail?: string;
+//   slug: string;
+//   status: string;
+//   isLatest: boolean;
+//   category: {
+//     name: string;
+//   };
+// };
 // API CALL FOR ARTICLES
-async function getArticles(): Promise<Article[]> {
-  const res = await fetch(
-    "https://project-epoverse-backend.onrender.com/api/articles",
-    { cache: "no-store" }
-  );
+// async function getArticles(): Promise<Article[]> {
+//   const res = await fetch(
+//     "https://project-epoverse-backend.onrender.com/api/articles",
+//     { cache: "no-store" }
+//   );
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 export default async function Home() {
   const articles = await getArticles();
+  // const articles = await getArticles();
 
   const published = articles.filter(
-    (article) => article.status === "published"
+    (article) => article.status === "published",
   );
 
   const mainArticle = published[0];
@@ -39,12 +41,11 @@ export default async function Home() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-10">
-
       {/* BREAKING BAR */}
       {mainArticle && (
         <div className="flex justify-between items-center bg-gray-100 border rounded-md px-4 py-3 mb-8">
           <span className="flex justify-between items-center bg-red-500 text-white px-3 py-1 text-base font-semibold rounded mr-3 text-center">
-            <FaBolt/> Breaking
+            <FaBolt /> Breaking
           </span>
           <Link href={`/articles/${mainArticle.slug}`}>
             {mainArticle.headline}
@@ -54,7 +55,6 @@ export default async function Home() {
 
       {/* TOP SECTION */}
       <div className="grid grid-cols-12 gap-8">
-
         {/* LEFT BIG ARTICLE */}
         {mainArticle && (
           <div className="col-span-8">
@@ -95,7 +95,6 @@ export default async function Home() {
             </div>
           ))}
         </div>
-
       </div>
 
       {/* BOTTOM GRID SECTION */}
@@ -123,7 +122,6 @@ export default async function Home() {
           </div>
         ))}
       </div>
-
     </main>
   );
 }
