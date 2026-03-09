@@ -18,10 +18,10 @@ type Article = {
   };
 };
 
-export async function getArticle(slug: string): Promise<Article | null> {
+async function getArticle(slug: string): Promise<Article | null> {
   try {
     const res = await axios.get(
-      `https://project-epoverse-backend.onrender.com/api/articles/slug/${slug}`
+      `https://project-epoverse-backend.onrender.com/api/articles/slug/${slug}`,
     );
 
     return res.data;
@@ -47,24 +47,16 @@ export default async function ArticlePage({
   }
 
   const imageSrc =
-    article.image ||
-    article.thumbnail ||
-    "https://via.placeholder.com/800x400";
+    article.image || article.thumbnail || "https://via.placeholder.com/800x400";
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-10">
-
       {/* Breadcrumb */}
-      <Breadcrumb
-        category={article.category?.name}
-        title={article.headline}
-      />
+      <Breadcrumb category={article.category?.name} title={article.headline} />
 
       <div className="grid grid-cols-12 gap-10">
-
         {/* LEFT ARTICLE CONTENT */}
         <div className="col-span-8">
-
           <p className="text-red-500 font-semibold mb-2">
             {article.category?.name}
           </p>
@@ -97,17 +89,13 @@ export default async function ArticlePage({
           </div>
 
           {/* Content */}
-          <div className="prose max-w-none">
-            {article.content}
-          </div>
-
+          <div className="prose max-w-none">{article.content}</div>
         </div>
 
         {/* RIGHT SIDEBAR */}
         <div className="col-span-4">
           <PopularPosts />
         </div>
-
       </div>
     </main>
   );
