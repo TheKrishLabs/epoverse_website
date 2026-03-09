@@ -3,8 +3,13 @@ import { Article } from "@/types/article";
 
 // GET ALL ARTICLES
 export const getArticles = async (): Promise<Article[]> => {
-  const res = await publicApi.get("/articles");
-  return res.data;
+  try {
+    const res = await publicApi.get("/articles");
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching articles:", err);
+    return [];
+  }
 };
 
 // GET SINGLE ARTICLE

@@ -28,7 +28,7 @@ import { FaBolt } from "react-icons/fa";
 // }
 
 export default async function Home() {
-  const articles = await getArticles();
+  const articles = (await getArticles()) || [];
   // const articles = await getArticles();
 
   const published = articles.filter(
