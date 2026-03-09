@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
-import { getCategories } from "@/lib/categories";
+import Header from "../components/Header/Header";
+import { getCategories } from "@/services/categoryService";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -26,15 +27,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categories = await getCategories();
+  const categories: any = await getCategories();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header categories={categories}/>
+        <Header categories={categories} />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
