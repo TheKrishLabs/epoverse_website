@@ -5,9 +5,22 @@ import { Article } from "@/types/article";
 export const getArticles = async (): Promise<Article[]> => {
   try {
     const res = await publicApi.get("/articles");
-    return res.data;
+    console.log("list of artiles, ", res.data);
+    return res.data.articles;
   } catch (err) {
     console.error("Error fetching articles:", err);
+    return [];
+  }
+};
+// get article by categories id
+export const fetchArticlesByCategoryId = async (
+  id: string,
+): Promise<Article[]> => {
+  try {
+    const res = await publicApi.get(`/articles/fetch-by-category/${id}`);
+    return res.data.articles;
+  } catch (err) {
+    console.error("Error fetching articles by category:", err);
     return [];
   }
 };
