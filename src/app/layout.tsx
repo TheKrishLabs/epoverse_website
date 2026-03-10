@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "../../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import { getCategories } from "@/services/categoryService";
+import { Category } from "@/types/category";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,7 +28,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categories: any = await getCategories();
+  const categories: Category[] = await getCategories();
   return (
     <html lang="en">
       <body

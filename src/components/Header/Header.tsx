@@ -13,11 +13,11 @@ import {
 import LoginModal from "../Login/LoginModal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import { IoIosArrowForward } from "react-icons/io";
-import { fetchArticlesByCategoryId } from "@/lib/categoriesById";
 import SkeletonLoader from "./Skelton";
 import MegaContent from "./MegaContent";
+import { fetchArticlesByCategoryId } from "@/services/articleService";
+import { Article } from "@/types/article";
 
 interface Category {
   _id: string;
@@ -38,11 +38,11 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
 
   // ===== MEGA MENU STATES =====
   const [hoveredCat, setHoveredCat] = useState<string | null>(null);
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Cache store
-  const cacheRef = useRef<Record<string, any[]>>({});
+  const cacheRef = useRef<Record<string, Article[]>>({});
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown when clicking outside
@@ -109,11 +109,9 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
       setLoading(true);
 
       try {
-        const data = await fetchArticlesByCategoryId(categoryId);
-        const fetchedArticles = data || [];
-
+        const fetchedArticles: Article[] =
+          await fetchArticlesByCategoryId(categoryId);
         cacheRef.current[categoryId] = fetchedArticles;
-        console.log(data);
         setArticles(fetchedArticles);
       } catch (err) {
         console.error(err);

@@ -1,35 +1,12 @@
 import { getArticles } from "@/services/articleService";
+import { Article } from "@/types/article";
 import Image from "next/image";
 import Link from "next/link";
 import { FaBolt } from "react-icons/fa";
 
-// // Get articles type
-// type Article = {
-//   _id: string;
-//   headline: string;
-//   content: string;
-//   image?: string;
-//   thumbnail?: string;
-//   slug: string;
-//   status: string;
-//   isLatest: boolean;
-//   category: {
-//     name: string;
-//   };
-// };
-// API CALL FOR ARTICLES
-// async function getArticles(): Promise<Article[]> {
-//   const res = await fetch(
-//     "https://project-epoverse-backend.onrender.com/api/articles",
-//     { cache: "no-store" }
-//   );
-
-//   return res.json();
-// }
-
 export default async function Home() {
-  const articles = (await getArticles()) || [];
-  // const articles = await getArticles();
+  const articles: Article[] = (await getArticles()) || [];
+  console.log("list of articles", articles);
 
   const published = articles.filter(
     (article) => article.status === "published",

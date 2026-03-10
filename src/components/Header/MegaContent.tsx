@@ -1,15 +1,4 @@
-interface Article {
-  _id: string;
-  headline: string;
-  thumbnail: string;
-  image?: string;
-  slug: string;
-  createdAt: string;
-  category?: {
-    _id: string;
-    name: string;
-  };
-}
+import { Article } from "@/types/article";
 
 export default function MegaContent({ articles }: { articles: Article[] }) {
   if (!articles?.length)
