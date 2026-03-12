@@ -6,7 +6,6 @@ import { FaBolt } from "react-icons/fa";
 
 export default async function Home() {
   const articles: Article[] = (await getArticles()) || [];
-  console.log("list of articles", articles);
 
   const published = articles.filter(
     (article) => article.status === "published",

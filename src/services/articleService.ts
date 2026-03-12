@@ -5,7 +5,6 @@ import { Article } from "@/types/article";
 export const getArticles = async (): Promise<Article[]> => {
   try {
     const res = await publicApi.get("/articles");
-    console.log("list of artiles, ", res.data);
     return res.data.articles;
   } catch (err) {
     console.error("Error fetching articles:", err);
@@ -26,9 +25,16 @@ export const fetchArticlesByCategoryId = async (
 };
 
 // GET SINGLE ARTICLE
-export const getArticleBySlug = async (slug: string): Promise<Article> => {
-  const res = await publicApi.get(`/articles/${slug}`);
-  return res.data;
+export const getArticleBySlug = async (
+  slug: string,
+): Promise<Article | null> => {
+  try {
+    const res = await publicApi.get(`/articles/slug/${slug}`);
+    return res.data.article;
+  } catch (err) {
+    console.error("Error fetching article");
+    return null;
+  }
 };
 
 // CREATE ARTICLE

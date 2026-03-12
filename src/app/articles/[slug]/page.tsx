@@ -2,42 +2,16 @@ import Image from "next/image";
 import Breadcrumb from "../../../../components/ArticlesSlugePage/Breadcrumb";
 import ShareButtons from "../../../../components/ArticlesSlugePage/ShareButtons";
 import PopularPosts from "../../../../components/ArticlesSlugePage/PopularPosts";
-import axios from "axios";
-
-type Article = {
-  _id: string;
-  headline: string;
-  content: string;
-  image?: string;
-  thumbnail?: string;
-  slug: string;
-  author?: string;
-  createdAt?: string;
-  category?: {
-    name: string;
-  };
-};
-
-async function getArticle(slug: string): Promise<Article | null> {
-  try {
-    const res = await axios.get(
-      `https://project-epoverse-backend.onrender.com/api/articles/slug/${slug}`,
-    );
-
-    return res.data;
-  } catch (error) {
-    console.error("Error fetching article:", error);
-    return null;
-  }
-}
+import { getArticleBySlug } from "@/services/articleService";
+import Comments from "@/components/ArticleSlugPage/Comments";
 
 export default async function ArticlePage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const article = await getArticle(params.slug);
-
+  const article = await getArticleBySlug(params.slug);
+  console.log("  article after slug ", article);
   if (!article) {
     return (
       <div className="text-center py-20 text-xl font-semibold">
@@ -88,8 +62,10 @@ export default async function ArticlePage({
             />
           </div>
 
-          {/* Content */}
-          <div className="prose max-w-none">{article.content}</div>
+          <div
+            className="prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
         </div>
 
         {/* RIGHT SIDEBAR */}
@@ -97,6 +73,9 @@ export default async function ArticlePage({
           <PopularPosts />
         </div>
       </div>
+
+      {/* Comment on Articles */}
+      <Comments articleId={article._id} />
     </main>
   );
 }

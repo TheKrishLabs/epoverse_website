@@ -12,6 +12,7 @@ export type Article = {
   image?: string;
   thumbnail?: string;
   slug: string;
+  author: string;
   status: "draft" | "published";
   isLatest: boolean;
   category: Category;

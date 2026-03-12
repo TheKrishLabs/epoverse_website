@@ -1,17 +1,21 @@
 import { Article } from "@/types/article";
+import Link from "next/link";
 
 export default function MegaContent({ articles }: { articles: Article[] }) {
   if (!articles?.length)
     return (
       <div className="text-center py-10 text-gray-400">No articles found</div>
     );
+  console.log("list of artilce", articles);
 
   return (
     <div className="grid grid-cols-4 gap-8">
-      {/* BIG FEATURE */}
-
       {articles.slice(0, 4).map((item) => (
-        <div key={item._id} className="group cursor-pointer mb-6">
+        <Link
+          key={item._id}
+          href={`/articles/${item.slug}`}
+          className="group cursor-pointer block"
+        >
           <div className="overflow-hidden rounded-lg">
             <img
               src={item.thumbnail}
@@ -25,7 +29,7 @@ export default function MegaContent({ articles }: { articles: Article[] }) {
           </h3>
 
           <p className="text-xs text-gray-400 mt-1">{item.category?.name}</p>
-        </div>
+        </Link>
       ))}
     </div>
   );
