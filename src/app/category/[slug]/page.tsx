@@ -1,41 +1,69 @@
-import Breadcrumb from "../../../../components/CategoryPage.tsx/Breadcrumb";
-import ArticleCard from "../../../../components/CategoryPage.tsx/ArticleCard";
-import PopularPosts from "../../../../components/CategoryPage.tsx/PopularPosts";
-import { fetchArticlesByCategoryId } from "@/services/articleService";
-import { Article } from "@/types/article";
+"use client";
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const articles: Article[] = await fetchArticlesByCategoryId(params.slug);
+import { useEffect, useState } from "react";
+import { CiBookmark } from "react-icons/ci";
+import { Bookmark } from "lucide-react";
+import {
+  saveBookmark,
+  removeBookmark,
+  getBookmarks,
+} from "@/services/bookmarkService";
+
+export default function BookmarkButton({ postId }: { postId: string }) {
+  const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    checkBookmark();
+  }, [postId]);
+
+  const checkBookmark = async () => {
+    try {
+      const data = await getBookmarks();
+      const exists = data?.some((item: any) => item.postId?._id === postId);
+      setSaved(exists);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const toggleBookmark = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    // optimistic UI
+    const newState = !saved;
+    setSaved(newState);
+
+    try {
+      if (newState) {
+        await saveBookmark(postId);
+      } else {
+        await removeBookmark(postId);
+      }
+    } catch (err) {
+      console.log(err);
+
+      // revert if API fails
+      setSaved(!newState);
+    }
+
+    setLoading(false);
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Breadcrumb */}
-      <Breadcrumb category={params.slug} />
+    <button
+      onClick={toggleBookmark}
+      className="flex items-center gap-2 px-4 py-2 mt-5 border rounded-lg hover:bg-gray-100 transition"
+    >
+      {saved ? (
+        <Bookmark className="w-5 h-5 text-yellow-500 fill-yellow-500 transition-transform duration-200 scale-110" />
+      ) : (
+        <CiBookmark className="w-5 h-5 text-gray-600 transition-transform duration-200 hover:scale-110" />
+      )}
 
-      {/* Title */}
-      <h1 className="text-2xl font-bold text-red-600 uppercase mb-6 border-b pb-2">
-        CATEGORY
-      </h1>
-
-      <div className="grid grid-cols-12 gap-6">
-        {/* Articles Section */}
-        <div className="col-span-9">
-          <div className="grid grid-cols-3 gap-6">
-            {articles.map((item) => (
-              <ArticleCard key={item._id} {...item} />
-            ))}
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div className="col-span-3">
-          <PopularPosts />
-        </div>
-      </div>
-    </div>
+      <span>{saved ? "Saved" : "Save"}</span>
+    </button>
   );
 }

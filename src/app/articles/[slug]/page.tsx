@@ -52,7 +52,7 @@ export default async function ArticlePage({
 
           
           {/* Share Buttons and bookmark */}
-<div className="flex items-center gap-4 bg-slate-950">
+<div className="flex items-center gap-4">
   <ShareButtons />
   <BookmarkButton postId={article._id} />
 </div>

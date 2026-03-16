@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Bookmark } from "lucide-react";
+import { CiBookmark } from "react-icons/ci";
 import {
   saveBookmark,
   removeBookmark,
@@ -10,10 +10,11 @@ import {
 
 export default function BookmarkButton({ postId }: { postId: string }) {
   const [saved, setSaved] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     checkBookmark();
-  }, []);
+  }, [postId]);
 
   const checkBookmark = async () => {
     try {
@@ -31,6 +32,8 @@ export default function BookmarkButton({ postId }: { postId: string }) {
 
   const toggleBookmark = async () => {
     try {
+      setAnimate(true);
+
       if (saved) {
         await removeBookmark(postId);
         setSaved(false);
@@ -38,6 +41,8 @@ export default function BookmarkButton({ postId }: { postId: string }) {
         await saveBookmark(postId);
         setSaved(true);
       }
+
+      setTimeout(() => setAnimate(false), 200);
     } catch (err) {
       console.log(err);
     }
@@ -46,16 +51,19 @@ export default function BookmarkButton({ postId }: { postId: string }) {
   return (
     <button
       onClick={toggleBookmark}
-      className="flex items-center gap-2 px-4 py-2 mt-5 border rounded-lg hover:bg-gray-100"
+      className="flex items-center gap-2 px-4 py-2 mt-5 border rounded-lg hover:bg-gray-100 transition"
     >
-      <Bookmark
-  className={`w-5 h-5 ${
-    saved
-      ? "text-yellow-500 fill-current"
-      : "text-gray-600"
-  }`}
-/>
-      {saved ? "Saved" : "Save"}
+      <CiBookmark
+        size={22}
+        className={`transition-all duration-200 
+        ${saved ? "text-yellow-500" : "text-gray-600"}
+        ${animate ? "scale-125" : "scale-100"}
+        `}
+      />
+
+      <span className="text-sm">
+        {saved ? "Saved" : "Save"}
+      </span>
     </button>
   );
 }
