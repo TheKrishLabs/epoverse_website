@@ -1,14 +1,28 @@
+"use client"
+import Stories from "@/components/ArticleSlugPage/Stories";
+
 import { getArticles } from "@/services/articleService";
 import { Article } from "@/types/article";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaBolt } from "react-icons/fa";
 
-export default async function Home() {
-  const articles: Article[] = (await getArticles()) || [];
+export default function Home() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const data = await getArticles();
+      setArticles(data || []);
+    };
+
+    fetchArticles();
+  }, []); // ✅ only once
 
   const published = articles.filter(
-    (article) => article.status === "published",
+    (article) => article.status === "published"
   );
 
   const mainArticle = published[0];
@@ -98,6 +112,11 @@ export default async function Home() {
           </div>
         ))}
       </div>
+      {/* STORIES SECTION */}
+      <div className="w-full px-4">
+        <Stories />
+      </div>
+      
     </main>
   );
 }

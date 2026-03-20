@@ -5,6 +5,7 @@ import PopularPosts from "../../../../components/ArticlesSlugePage/PopularPosts"
 import { getArticleBySlug } from "@/services/articleService";
 import Comments from "@/components/ArticleSlugPage/Comments";
 import BookmarkButton from "@/components/ArticleSlugPage/BookmarkButton";
+import VotingPoll from "@/components/ArticleSlugPage/VotingPoll";
 
 export default async function ArticlePage({
   params,
@@ -76,6 +77,7 @@ export default async function ArticlePage({
         {/* RIGHT SIDEBAR */}
         <div className="col-span-4">
           <PopularPosts />
+          <VotingPoll />
         </div>
       </div>
 
