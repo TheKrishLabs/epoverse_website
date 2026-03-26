@@ -27,20 +27,21 @@ privateApi.interceptors.request.use(
 );
 
 // RESPONSE INTERCEPTOR (only for private API)
-privateApi.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (
-      error.response?.status === 401 &&
-      typeof window !== "undefined" &&
-      window.location.pathname !== "/login"
-    ) {
-      window.location.href = "/login";
-    }
+// privateApi.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (
+//       error.response?.status === 401 &&
+//       typeof window !== "undefined" &&
+//       window.location.pathname !== "/login"
+//     ) {
+//       localStorage.removeItem("token");
+//       window.location.href = "/login";
+//     }
 
-    return Promise.reject(error);
-  },
-);
+//     return Promise.reject(error);
+//   },
+// );
 // privateApi.interceptors.response.use(
 //   (response) => response,
 //   (error) => {
