@@ -24,6 +24,19 @@ export const fetchArticlesByCategoryId = async (
   }
 };
 
+// get article by categories id
+export const fetchArticlesByCategorySlug = async (
+  slug: string,
+): Promise<Article[]> => {
+  try {
+    const res = await publicApi.get(`/articles/fetch-by-categorySlug/${slug}`);
+    return res.data.articles;
+  } catch (err) {
+    console.error("Error fetching articles by category:", err);
+    return [];
+  }
+};
+
 // GET SINGLE ARTICLE
 export const getArticleBySlug = async (
   slug: string,

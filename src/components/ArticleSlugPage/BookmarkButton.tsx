@@ -13,17 +13,17 @@ export default function BookmarkButton({ postId }: { postId: string }) {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    checkBookmark();
+    const token = localStorage.getItem("token");
+
+    if (token) checkBookmark();
   }, [postId]);
 
   const checkBookmark = async () => {
     try {
       const data = await getBookmarks();
 
-      const exists = data?.some(
-        (item: any) => item.postId?._id === postId
-      );
-     console.log(data)
+      const exists = data?.some((item: any) => item.postId?._id === postId);
+      console.log(data);
       setSaved(exists);
     } catch (err) {
       console.log(err);
@@ -61,9 +61,7 @@ export default function BookmarkButton({ postId }: { postId: string }) {
         `}
       />
 
-      <span className="text-sm">
-        {saved ? "Saved" : "Save"}
-      </span>
+      <span className="text-sm">{saved ? "Saved" : "Save"}</span>
     </button>
   );
 }

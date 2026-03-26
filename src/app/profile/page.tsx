@@ -13,10 +13,6 @@ export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) return;
-
     const details = async () => {
       try {
         const res = await getProfileDetails();
@@ -25,8 +21,9 @@ export default function ProfilePage() {
         console.log(err);
       }
     };
+    const token = localStorage.getItem("token");
 
-    details();
+    if (token) details();
   }, []);
 
   useEffect(() => {
@@ -67,8 +64,8 @@ export default function ProfilePage() {
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold">{user?.fullName || 'username'}</h1>
-          <p className="text-gray-500">{user?.email || 'email'}</p>
+          <h1 className="text-2xl font-bold">{user?.fullName || "username"}</h1>
+          <p className="text-gray-500">{user?.email || "email"}</p>
         </div>
       </div>
 

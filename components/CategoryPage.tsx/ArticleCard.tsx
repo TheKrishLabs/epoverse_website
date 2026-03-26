@@ -1,23 +1,28 @@
 import { Article } from "@/types/article";
+import Link from "next/link";
 
 export default function ArticleCard(article: Article) {
   return (
-    <div className="bg-white border hover:shadow-md transition">
-      <img
-        src={article.image}
-        alt={article.headline}
-        className="w-full h-48 object-cover"
-      />
+    <>
+      <Link
+        key={article._id}
+        href={`/articles/${article.slug}`}
+        className="group cursor-pointer block"
+      >
+        <div className="overflow-hidden rounded-lg">
+          <img
+            src={article.image}
+            alt={article.headline}
+            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
 
-      <div className="p-3">
-        <h2 className="font-semibold text-sm leading-5 hover:text-red-600 cursor-pointer">
+        <h3 className="mt-4 font-bold text-lg group-hover:text-red-500 transition">
           {article.headline}
-        </h2>
+        </h3>
 
-        <p className="text-xs text-gray-500 mt-2">
-          {new Date(article.createdAt!).toDateString()}
-        </p>
-      </div>
-    </div>
+        <p className="text-xs text-gray-400 mt-1">{article.category?.name}</p>
+      </Link>
+    </>
   );
 }

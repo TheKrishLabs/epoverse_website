@@ -33,7 +33,7 @@ export default function Home() {
     <main className="max-w-7xl mx-auto px-4 py-10">
       {/* BREAKING BAR */}
       {mainArticle && (
-        <div className="flex justify-between items-center bg-gray-100 border rounded-md px-4 py-3 mb-8">
+        <div className="flex bg-gray-100 border rounded-md px-4 py-3 mb-8">
           <span className="flex justify-between items-center bg-red-500 text-white px-3 py-1 text-base font-semibold rounded mr-3 text-center">
             <FaBolt /> Breaking
           </span>
@@ -85,16 +85,15 @@ export default function Home() {
             </div>
           ))}
           {/* Popular */}
-<div className="col-span-4">
-  <PopularPosts />
-</div>
+          <div className="col-span-4">
+            <PopularPosts />
+          </div>
 
-{/* Top Week */}
-<div className="col-span-4 mt-8">
-  <TopWeek />
-</div>
+          {/* Top Week */}
+          <div className="col-span-4 mt-8">
+            <TopWeek />
+          </div>
         </div>
-        
       </div>
 
       {/* BOTTOM GRID SECTION */}

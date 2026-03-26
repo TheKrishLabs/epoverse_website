@@ -73,9 +73,9 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
     };
   }, []);
 
-  const handleCategoryClick = (id: string) => {
+  const handleCategoryClick = (slug: string) => {
     setHoveredCat(null);
-    router.push(`/category/${id}`);
+    router.push(`/category/${slug}`);
   };
 
   // Date
@@ -266,7 +266,7 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
               <li
                 key={cat._id}
                 onMouseEnter={() => handleHover(cat._id)}
-                onClick={() => handleCategoryClick(cat._id)}
+                onClick={() => handleCategoryClick(cat.slug)}
                 className="relative group cursor-pointer"
               >
                 <div className="flex items-center gap-1 group-hover:text-red-500">

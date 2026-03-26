@@ -1,7 +1,7 @@
 import Breadcrumb from "../../../../components/CategoryPage.tsx/Breadcrumb";
 import ArticleCard from "../../../../components/CategoryPage.tsx/ArticleCard";
 import PopularPosts from "../../../../components/CategoryPage.tsx/PopularPosts";
-import { fetchArticlesByCategoryId } from "@/services/articleService";
+import { fetchArticlesByCategorySlug } from "@/services/articleService";
 import { Article } from "@/types/article";
 import TopWeek from "@/components/ArticleSlugPage/TopWeek";
 
@@ -10,7 +10,7 @@ export default async function CategoryPage({
 }: {
   params: { slug: string };
 }) {
-  const articles: Article[] = await fetchArticlesByCategoryId(params.slug);
+  const articles: Article[] = await fetchArticlesByCategorySlug(params.slug);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
