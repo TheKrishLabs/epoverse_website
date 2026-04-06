@@ -31,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +43,13 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
   // Cache store
   const cacheRef = useRef<Record<string, Article[]>>({});
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -127,6 +135,8 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
     if (token) {
       alert("Are you sure want to logout");
       localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      router.push("/");
     }
   };
   return (
@@ -142,7 +152,8 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
 
           {/* Right */}
           <div className="flex items-center gap-4 text-gray-700">
-            <button
+            {!isLoggedIn && (<>
+             <button
               onClick={() => setIsLoginOpen(true)}
               className="hover:text-black"
             >
@@ -152,6 +163,8 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
             <Link href="/registration" className="hover:text-black">
               Registration
             </Link>
+            </>)}
+           
 
             {/* Theme Icon */}
             <FaSun
@@ -203,14 +216,13 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
                 <FaYoutube />
               </div>
             </div>
-
-            {/* Logout */}
-            <div className="ml-10">
+            {isLoggedIn && (
+              <>
+              <div className="ml-10">
               <button onClick={logoutUser}>
                 <LogOut />
               </button>
             </div>
-            {/* Logout */}
             <div className="ml-10">
               <Link href="/profile">
                 {" "}
@@ -219,6 +231,11 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
                 </button>
               </Link>
             </div>
+            </>
+            )}
+
+            
+
           </div>
         </div>
       </div>
@@ -304,7 +321,7 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
           </div>
         )}
       </div>
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      <LoginModal isOpen={isLoginOpen} onLogin={() => setIsLoggedIn(true)} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 };

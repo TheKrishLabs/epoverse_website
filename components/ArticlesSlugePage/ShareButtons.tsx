@@ -1,30 +1,22 @@
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaWhatsapp,
-} from "react-icons/fa";
+"use client";
 
-export default function ShareButtons() {
+export default function ShareButtons({ url, title }: { url: string; title: string }) {
+  const whatsappShare = () => {
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+      title + " " + url
+    )}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
-    <div className="flex gap-3 mt-4">
-
-      <button className="bg-blue-600 text-white p-2 rounded">
-        <FaFacebookF />
+    <div className="flex gap-3">
+      <button
+        onClick={whatsappShare}
+        className="bg-green-500 text-white px-3 py-1 rounded"
+      >
+        Share WhatsApp
       </button>
-
-      <button className="bg-black text-white p-2 rounded">
-        <FaTwitter />
-      </button>
-
-      <button className="bg-blue-700 text-white p-2 rounded">
-        <FaLinkedinIn />
-      </button>
-
-      <button className="bg-green-500 text-white p-2 rounded">
-        <FaWhatsapp />
-      </button>
-
     </div>
   );
 }

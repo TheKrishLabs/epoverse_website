@@ -14,6 +14,7 @@ export default async function ArticlePage({
   params: { slug: string };
 }) {
   const article = await getArticleBySlug(params.slug);
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/articles/${params.slug}`;
   console.log("  article after slug ", article);
   if (!article) {
     return (
@@ -55,7 +56,7 @@ export default async function ArticlePage({
           
           {/* Share Buttons and bookmark */}
 <div className="flex items-center gap-4">
-  <ShareButtons />
+  <ShareButtons  url={articleUrl} title={article.headline} />
   <BookmarkButton postId={article._id} />
 </div>
 

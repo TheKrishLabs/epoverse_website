@@ -56,12 +56,14 @@ export default function BookmarkButton({ postId }: { postId: string }) {
       <CiBookmark
         size={22}
         className={`transition-all duration-200 
-        ${saved ? "text-yellow-500" : "text-gray-600"}
+        ${saved ? "text-red-500" : "text-gray-600"}
         ${animate ? "scale-125" : "scale-100"}
         `}
       />
 
-      <span className="text-sm">{saved ? "Saved" : "Save"}</span>
+      <span className={saved ? "text-red-500" : "text-gray-600"}>
+        {saved ? "Saved" : "Save"}
+      </span>
     </button>
   );
 }

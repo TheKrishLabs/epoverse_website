@@ -9,10 +9,11 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   isOpen: boolean;
+  onLogin: () => void;
   onClose: () => void;
 };
 
-export default function LoginModal({ isOpen, onClose }: Props) {
+export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -87,10 +88,10 @@ export default function LoginModal({ isOpen, onClose }: Props) {
       if (data?.accessToken) {
         localStorage.setItem("token", data.accessToken);
       }
-
       alert("Login successful!");
 
       router.push("/"); // redirect
+      onLogin();
       onClose();
     } catch (err: any) {
       alert(err?.response?.data?.message || "Login failed");

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getBookmarks, removeBookmark } from "@/services/bookmarkService";
 import Link from "next/link";
 import { BookmarkX } from "lucide-react";
-import { getProfileDetails } from "@/services/profile";
+import { getProfileDetails, updateProfileDetails } from "@/services/profile";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("bookmarks");
@@ -55,6 +55,13 @@ export default function ProfilePage() {
     }
   };
 
+  const updateProfile = async() => {
+    alert("Profile update coming soon...");
+    const updatedUser =  await updateProfileDetails(user);
+    console.log(updatedUser);
+    setUser(updatedUser.user);
+  }
+
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
       {/* 👤 PROFILE HEADER */}
@@ -91,6 +98,16 @@ export default function ProfilePage() {
           }`}
         >
           Saved Bookmarks
+        </button>
+             <button
+          onClick={() => setActiveTab("update-profile")}
+          className={`pb-2 ${
+            activeTab === "update-profile"
+              ? "border-b-2 border-black font-semibold"
+              : "text-gray-500"
+          }`}
+        >
+          Update Profile
         </button>
       </div>
 
@@ -150,6 +167,29 @@ export default function ProfilePage() {
             )}
           </>
         )}
+
+        {activeTab === "update-profile" && (
+          <>
+          <div className="flex flex-col" >
+            <p className="text-gray-500 mb-4">Update your profile information</p>
+            <label className="text-sm font-medium mb-1">Full Name</label>
+            <input type="text" placeholder="Full Name"
+            className="border "
+            value={user?.fullName || ""} onChange={(e) => setUser({ ...user, fullName: e.target.value })}/> 
+            <label className="text-sm font-medium mb-1">Email</label>
+            <input type="text" placeholder="Email" value={user?.email || ""} 
+            className="border"
+            onChange={(e) => setUser({ ...user, email: e.target.value })}/>
+            <label className="text-sm font-medium mb-1">Phone Number</label>
+            <input type="text" placeholder="Phone Number" value={user?.phoneNumber || ""} 
+            className="border"
+            onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}/>
+            <button className="text-blue" onClick={updateProfile}> Update</button>
+          </div>
+          </>
+          
+        )}
+
       </div>
     </main>
   );
