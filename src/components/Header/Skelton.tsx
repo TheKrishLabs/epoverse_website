@@ -1,4 +1,5 @@
 export default function SkeletonLoader() {
+  console.log("Rendering SkeletonLoader");
   return (
     <div className="grid grid-cols-4 gap-8 animate-pulse">
       {/* Big Skeleton */}
