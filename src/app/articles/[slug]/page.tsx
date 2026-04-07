@@ -7,6 +7,7 @@ import BookmarkButton from "@/components/ArticleSlugPage/BookmarkButton";
 import VotingPoll from "@/components/ArticleSlugPage/VotingPoll";
 import PopularPosts from "../../../../components/CategoryPage.tsx/PopularPosts";
 import TopWeek from "@/components/ArticleSlugPage/TopWeek";
+import Report from "@/components/ArticleSlugPage/Report";
 
 export default async function ArticlePage({
   params,
@@ -85,6 +86,7 @@ export default async function ArticlePage({
       </div>
 
       {/* Comment on Articles */}
+      <Report articleId={article._id} />
       <Comments articleId={article._id} />
     </main>
   );
