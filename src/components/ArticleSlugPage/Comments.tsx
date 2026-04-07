@@ -14,7 +14,6 @@ export default function Comments({ articleId }: { articleId: string }) {
   useEffect(() => {
   const fetchComments = async () => {
     const res = await publicApi.get(`/comments/article/${articleId}`);
-    console.log("  comments ", res.data);
     setComments(res.data.comments);   };
 
    fetchComments();

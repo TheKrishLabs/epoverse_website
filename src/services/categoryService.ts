@@ -4,7 +4,6 @@ import { Category, CategoryResponse } from "@/types/category";
 export async function getCategories(): Promise<Category[]> {
   try {
     const res = await publicApi.get<CategoryResponse>("/categories");
-    console.log("list of categories", res.data);
     return res.data.categories;
   } catch (err) {
     console.error("Category API error:", err);

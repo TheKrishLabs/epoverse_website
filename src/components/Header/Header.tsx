@@ -131,7 +131,6 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
 
   const logoutUser = () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token) {
       alert("Are you sure want to logout");
       localStorage.removeItem("token");

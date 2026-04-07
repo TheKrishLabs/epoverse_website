@@ -39,7 +39,6 @@ export default function Stories({ onOpen }: any) {
       const storiesWithItems: StoryItems[] = await Promise.all(
         storyList.map(async (story: Story) => {
           const items = await getStoryItems(story._id);
-          console.log(items)
           return {
             ...story,
             items: items || [],

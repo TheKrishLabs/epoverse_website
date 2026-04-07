@@ -8,7 +8,6 @@ export default function MegaContent({
   articles: Article[];
   closeMenu: () => void;
 }) {
-  console.log("MegaContent articles:", articles);
   if (!articles?.length)
     return (
       <div className="text-center py-10 text-gray-400">No articles found</div>

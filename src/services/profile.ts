@@ -10,7 +10,7 @@ export const updateProfileDetails= async (updatedUser: any)=>{
         const res= await privateApi.put('users/profile', updatedUser)
         return res.data
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err  
     } 
 }

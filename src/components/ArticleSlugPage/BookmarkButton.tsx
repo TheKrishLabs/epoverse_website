@@ -23,7 +23,6 @@ export default function BookmarkButton({ postId }: { postId: string }) {
       const data = await getBookmarks();
 
       const exists = data?.some((item: any) => item.postId?._id === postId);
-      console.log(data);
       setSaved(exists);
     } catch (err) {
       console.log(err);

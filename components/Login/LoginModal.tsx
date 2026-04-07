@@ -82,8 +82,6 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
         password: form.password,
       });
 
-      console.log("Login success:", data);
-
       // ✅ correct token store
       if (data?.accessToken) {
         localStorage.setItem("token", data.accessToken);
