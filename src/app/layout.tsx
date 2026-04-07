@@ -5,6 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import { getCategories } from "@/services/categoryService";
 import { Category } from "@/types/category";
+import { Providers } from "@/providers/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,15 +30,17 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const categories: Category[] = await getCategories();
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+ return (
+  <html lang="en" suppressHydrationWarning>
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+      <Providers>
         <Header categories={categories} />
         {children}
         <Footer />
-      </body>
-    </html>
-  );
+      </Providers>
+    </body>
+  </html>
+);
 }

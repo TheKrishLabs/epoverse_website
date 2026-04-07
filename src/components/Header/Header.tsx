@@ -21,6 +21,7 @@ import { fetchArticlesByCategoryId } from "@/services/articleService";
 import { Article } from "@/types/article";
 import LoginModal from "../../../components/Login/LoginModal";
 import { LogOut } from "lucide-react";
+import ThemeToggle from "../ThemeToggle";
 
 interface HeaderProps {
   categories: any[];
@@ -163,14 +164,8 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
               Registration
             </Link>
             </>)}
-           
 
-            {/* Theme Icon */}
-            <FaSun
-              size={20}
-              className="text-orange-500 cursor-pointer shadow rounded-xl"
-            />
-
+            <ThemeToggle /> 
             {/* Language */}
 
             <div className="relative" ref={dropdownRef}>
