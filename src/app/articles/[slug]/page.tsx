@@ -70,11 +70,10 @@ export default async function ArticlePage({
               className="object-cover"
             />
           </div>
-
-          <div
-            className="prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+<div
+  className="prose max-w-none dark:prose-invert prose-img:rounded-lg prose-headings:font-semibold"
+  dangerouslySetInnerHTML={{ __html: article.content }}
+/>
         </div>
 
         {/* RIGHT SIDEBAR */}
