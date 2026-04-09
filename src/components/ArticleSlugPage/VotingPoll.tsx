@@ -86,7 +86,6 @@ const [hasVoted, setHasVoted] = useState(false);
       // ✅ OPTION CHANGED → CHANGE VOTE
       await changeVote(poll._id, optionId);
 
-      console.log("Vote changed");
     }
 
     // Refresh poll results

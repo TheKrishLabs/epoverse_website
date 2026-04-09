@@ -94,7 +94,6 @@ export default function TopWeek() {
 
   const main = articles[0];
   const others = articles.slice(1, 3);
-console.log(main,others)
   return (
     <div className="w-full">
 

@@ -58,7 +58,6 @@ export default function ProfilePage() {
   const updateProfile = async() => {
     alert("Profile update coming soon...");
     const updatedUser =  await updateProfileDetails(user);
-    console.log(updatedUser);
     setUser(updatedUser.user);
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { privateApi } from "@/lib/axios";
+import { privateApi, publicApi } from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -11,14 +11,13 @@ export default function Comments({ articleId }: { articleId: string }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-//   useEffect(() => {
-//   const fetchComments = async () => {
-//     const res = await publicApi.get(`/comments?articleId=${articleId}`);
-//     setComments(res.data);
-//   };
+  useEffect(() => {
+  const fetchComments = async () => {
+    const res = await publicApi.get(`/comments/article/${articleId}`);
+    setComments(res.data.comments);   };
 
-//   fetchComments();
-// }, [articleId]);
+   fetchComments();
+   }, [articleId]);
 
 const submitComment = async (e: any) => {
   e.preventDefault();
@@ -51,6 +50,18 @@ const submitComment = async (e: any) => {
   }
 };
 
+const handleCommentChange = (e: any) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login to post a comment");
+      router.push("/login");
+      return;
+    }
+
+    setContent(e.target.value);
+}
+
   return (
     <div className="mt-16">
 
@@ -60,7 +71,7 @@ const submitComment = async (e: any) => {
         placeholder="Share your thoughts..."
         className="w-full border rounded-lg p-4 h-28 mb-4"
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={handleCommentChange}
       />
 
       <button
@@ -72,16 +83,15 @@ const submitComment = async (e: any) => {
       </button>
 
     
-
-      {/* Comment List
       <div className="space-y-6">
+        <h1 className="text-2xl font-bold">All Comments</h1>
         {comments.map((c) => (
-          <div key={c._id} className="border-b pb-4">
-            <p className="font-semibold">{c.name}</p>
-            <p className="text-gray-700">{c.message}</p>
+          <div key={c._id} className="border-b pb-4 m-2"> 
+            <p className="font-semibold">{c.user?.email}</p>
+            <p className="text-gray-700">{c.content}</p>
           </div>
         ))}
-      </div> */}
+      </div> 
     </div>
   );
 }

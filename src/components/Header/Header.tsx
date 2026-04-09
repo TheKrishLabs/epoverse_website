@@ -21,12 +21,15 @@ import { fetchArticlesByCategoryId } from "@/services/articleService";
 import { Article } from "@/types/article";
 import LoginModal from "../../../components/Login/LoginModal";
 import { LogOut } from "lucide-react";
+import ThemeToggle from "../ThemeToggle";
+import { Category } from "@/types/category";
+import { getCategories } from "@/services/categoryService";
 
 interface HeaderProps {
   categories: any[];
 }
 
-const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
+const Header= () => {
   const router = useRouter();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
@@ -38,6 +41,7 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
   // ===== MEGA MENU STATES =====
   const [hoveredCat, setHoveredCat] = useState<string | null>(null);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Cache store
@@ -45,6 +49,17 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    // fetch categories for navbar
+    const fetchCategories = async () => {
+      try {
+        const cats: Category[] = await getCategories();
+        console.log("Fetched categories:", cats);
+        setCategories(cats);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+      }
+    }
+    fetchCategories();
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
@@ -131,7 +146,6 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
 
   const logoutUser = () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token) {
       alert("Are you sure want to logout");
       localStorage.removeItem("token");
@@ -164,14 +178,8 @@ const Header: React.FC<HeaderProps> = ({ categories = [] }) => {
               Registration
             </Link>
             </>)}
-           
 
-            {/* Theme Icon */}
-            <FaSun
-              size={20}
-              className="text-orange-500 cursor-pointer shadow rounded-xl"
-            />
-
+            <ThemeToggle /> 
             {/* Language */}
 
             <div className="relative" ref={dropdownRef}>

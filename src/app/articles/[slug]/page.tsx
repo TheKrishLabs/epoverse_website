@@ -7,6 +7,7 @@ import BookmarkButton from "@/components/ArticleSlugPage/BookmarkButton";
 import VotingPoll from "@/components/ArticleSlugPage/VotingPoll";
 import PopularPosts from "../../../../components/CategoryPage.tsx/PopularPosts";
 import TopWeek from "@/components/ArticleSlugPage/TopWeek";
+import Report from "@/components/ArticleSlugPage/Report";
 
 export default async function ArticlePage({
   params,
@@ -69,11 +70,10 @@ export default async function ArticlePage({
               className="object-cover"
             />
           </div>
-
-          <div
-            className="prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+<div
+  className="prose max-w-none dark:prose-invert prose-img:rounded-lg prose-headings:font-semibold"
+  dangerouslySetInnerHTML={{ __html: article.content }}
+/>
         </div>
 
         {/* RIGHT SIDEBAR */}
@@ -85,6 +85,7 @@ export default async function ArticlePage({
       </div>
 
       {/* Comment on Articles */}
+      <Report articleId={article._id} />
       <Comments articleId={article._id} />
     </main>
   );
