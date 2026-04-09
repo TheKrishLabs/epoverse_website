@@ -36,7 +36,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <Providers>
-        <Header categories={categories} />
+        <Header/>
         {children}
         <Footer />
       </Providers>
