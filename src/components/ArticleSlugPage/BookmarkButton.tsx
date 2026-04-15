@@ -50,19 +50,13 @@ export default function BookmarkButton({ postId }: { postId: string }) {
   return (
     <button
       onClick={toggleBookmark}
-      className="flex items-center gap-2 px-4 py-2 mt-5 border rounded-lg hover:bg-gray-100 transition"
+      className={`flex items-center gap-2 px-4 py-2 border rounded-lg transition-all font-medium
+        ${saved 
+          ? "bg-red-50 border-red-500 text-red-500 dark:bg-gray-800" 
+          : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"}`}
     >
-      <CiBookmark
-        size={22}
-        className={`transition-all duration-200 
-        ${saved ? "text-red-500" : "text-gray-600"}
-        ${animate ? "scale-125" : "scale-100"}
-        `}
-      />
-
-      <span className={saved ? "text-red-500" : "text-gray-600"}>
-        {saved ? "Saved" : "Save"}
-      </span>
+      <CiBookmark size={22} className={`transition-transform duration-200 ${animate ? "scale-125" : "scale-100"} ${saved ? "text-red-500" : ""}`} />
+      <span>{saved ? "Saved" : "Save"}</span>
     </button>
   );
 }

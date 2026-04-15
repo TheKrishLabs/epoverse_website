@@ -93,8 +93,8 @@ export default function Registration() {
   };
 
   return (
-    <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-8">
-      <h2 className="text-2xl font-semibold text-center mb-6">Registration</h2>
+    <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-8 dark:bg-gray-900 dark:text-white">
+      <h2 className="text-2xl font-semibold text-center mb-6 dark:text-white">Registration</h2>
 
       {/* Social Login */}
       <button className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2 rounded mb-3">
@@ -102,12 +102,12 @@ export default function Registration() {
         Connect with Facebook
       </button>
 
-      <button className="flex items-center justify-center gap-2 w-full bg-gray-100 py-2 rounded mb-4 border">
+      <button className="flex items-center justify-center gap-2 w-full bg-gray-100 py-2 rounded mb-4 border dark:bg-gray-800 dark:border-gray-700 dark:text-white">
         <FcGoogle size={20} />
         Connect with Google
       </button>
 
-      <p className="text-base mb-6 underline decoration-indigo-500/30 font-semibold text-gray-400 cursor-pointer">
+      <p className="text-base mb-6 underline decoration-indigo-500/30 font-semibold text-gray-400 cursor-pointer dark:text-gray-500">
         Or login with email
       </p>
 
@@ -115,7 +115,7 @@ export default function Registration() {
 
         {/* Username */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">
             Fullname
           </label>
           <input
@@ -123,7 +123,7 @@ export default function Registration() {
             placeholder="Enter fullname"
             value={form.username}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
           {errors.username && (
             <p className="text-red-500 text-sm">{errors.username}</p>
@@ -132,7 +132,7 @@ export default function Registration() {
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">
             Email
           </label>
           <input
@@ -141,7 +141,7 @@ export default function Registration() {
             placeholder="Enter email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email}</p>
@@ -150,7 +150,7 @@ export default function Registration() {
 
         {/* Password */}
         <div className="relative">
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">
             Password
           </label>
 
@@ -160,7 +160,7 @@ export default function Registration() {
             placeholder="Enter password"
             value={form.password}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
 
           <span
@@ -177,7 +177,7 @@ export default function Registration() {
 
         {/* Confirm Password */}
         <div className="relative">
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">
             Confirm Password
           </label>
 
@@ -187,7 +187,7 @@ export default function Registration() {
             placeholder="Confirm password"
             value={form.confirmPassword}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
 
           <span
@@ -209,7 +209,7 @@ export default function Registration() {
       </form>
 
       {/* Terms */}
-      <label className="flex items-center gap-2 text-sm mt-3">
+      <label className="flex items-center gap-2 text-sm mt-3 dark:text-gray-300">
         <input
           type="checkbox"
           name="agree"

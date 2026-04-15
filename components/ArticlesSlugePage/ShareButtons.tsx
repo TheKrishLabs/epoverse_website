@@ -1,5 +1,7 @@
 "use client";
 
+import { FaWhatsapp } from 'react-icons/fa';
+
 export default function ShareButtons({ url, title }: { url: string; title: string }) {
   const whatsappShare = () => {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
@@ -13,9 +15,10 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
     <div className="flex gap-3">
       <button
         onClick={whatsappShare}
-        className="bg-green-500 text-white px-3 py-1 rounded"
+        className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors font-medium shadow-sm"
       >
-        Share WhatsApp
+        <FaWhatsapp size={20} />
+        <span className="font-medium">WhatsApp</span>
       </button>
     </div>
   );

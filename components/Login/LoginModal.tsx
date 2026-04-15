@@ -107,7 +107,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
       />
 
       {/* MODAL */}
-      <div className="relative bg-white w-full max-w-md rounded-lg shadow-2xl p-8 z-10">
+      <div className="relative bg-white w-full max-w-md rounded-lg shadow-2xl p-8 z-10 dark:bg-gray-900 dark:text-white">
         {/* CLOSE */}
         <button
           onClick={onClose}
@@ -119,7 +119,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
 
         {/* GOOGLE */}
-        <button className="flex items-center justify-center gap-2 w-full bg-gray-100 py-2 rounded mb-4 border">
+        <button className="flex items-center justify-center gap-2 w-full bg-gray-100 py-2 rounded mb-4 border dark:bg-gray-800 dark:border-gray-700 dark:text-white">
           <FcGoogle size={20} />
           Connect with Google
         </button>
@@ -131,7 +131,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
 
         {/* EMAIL */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">
             Email Address
           </label>
 
@@ -141,7 +141,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
             placeholder="Enter your email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
 
           {errors.email && (
@@ -151,7 +151,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
 
         {/* PASSWORD */}
         <div className="mb-2 relative">
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">Password</label>
 
           <input
             name="password"
@@ -159,7 +159,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
             placeholder="Enter your password"
             value={form.password}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           />
 
           <span

@@ -156,16 +156,16 @@ const Header= () => {
   return (
     <>
       {/* ================= TOP BAR ================= */}
-      <div className="bg-gray-100 border-b text-sm">
+      <div className="bg-gray-100 border-b text-sm dark:bg-gray-900 dark:border-gray-700">
         <div className="w-full flex items-center justify-between py-2 px-12">
           {/* Left - Date */}
-          <div className="flex items-center gap-2 text-gray-600">
+          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
             <FaClock className="text-gray-500 text-xs" />
             <span>{formattedDate}</span>
           </div>
 
           {/* Right */}
-          <div className="flex items-center gap-4 text-gray-700">
+          <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300">
             {!isLoggedIn && (<>
              <button
               onClick={() => setIsLoginOpen(true)}
@@ -185,23 +185,23 @@ const Header= () => {
             <div className="relative" ref={dropdownRef}>
               <div
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-1 border px-3 py-1 rounded-full text-xs cursor-pointer bg-white hover:bg-gray-50"
+                className="flex items-center gap-1 border px-3 py-1 rounded-full text-xs cursor-pointer bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white dark:border-gray-600"
               >
                 <FaGlobe />
                 <span>{selectedLang}</span>
               </div>
 
               {isLangOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white border rounded-md shadow-lg text-sm z-50">
+                <div className="absolute right-0 mt-2 w-32 bg-white border rounded-md shadow-lg text-sm z-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                   <div
                     onClick={() => handleLandSelected("English")}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                   >
                     English
                   </div>
                   <div
                     onClick={() => handleLandSelected("Telugu")}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                   >
                     Telugu
                   </div>
@@ -249,19 +249,19 @@ const Header= () => {
       </div>
 
       {/* ================= LOGO + AD SECTION ================= */}
-      <div className="bg-white">
+      <div className="bg-white dark:bg-gray-900">
         <div className="w-full flex items-center justify-between py-3 px-10">
           {/* Logo */}
           <Link
             href="/"
             className="text-4xl font-bold flex items-center transition-all duration-300 hover:scale-50"
           >
-            <span className="text-black">Epo</span>
+            <span className="text-black dark:text-white">Epo</span>
             <span className="text-red-600">Verse.</span>
           </Link>
 
           {/* Ad Banner */}
-          <div className="bg-gray-300 w-[771px] h-[90px] flex items-center justify-center text-gray-500 text-2xl font-semibold">
+          <div className="bg-gray-300 w-[771px] h-[90px] flex items-center justify-center text-gray-500 text-2xl font-semibold dark:bg-gray-800 dark:text-gray-400">
             Banner
           </div>
         </div>
@@ -315,7 +315,7 @@ const Header= () => {
 
         {/* GLOBAL DROPDOWN */}
         {hoveredCat && (
-          <div className="absolute left-0 top-full w-full bg-white shadow-2xl animate-fadeIn">
+          <div className="absolute left-0 top-full w-full bg-white shadow-2xl animate-fadeIn dark:bg-gray-900 dark:text-white">
             <div className="max-w-[1200px] mx-auto p-8">
               {loading ? (
                 <SkeletonLoader />

@@ -100,7 +100,7 @@ const [hasVoted, setHasVoted] = useState(false);
 };
 
   return (
-    <div className="border rounded-lg p-4 shadow-sm bg-white">
+    <div className="border rounded-lg p-4 shadow-sm bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-white">
       {/* Header */}
       <div className="bg-black text-white text-sm font-semibold px-3 py-2 mb-4">
         VOTING POLL
@@ -110,7 +110,7 @@ const [hasVoted, setHasVoted] = useState(false);
       <h3 className="font-semibold mb-2">{poll.question}</h3>
 
       {/* Total Votes */}
-      <p className="text-center text-gray-600 mb-4">
+      <p className="text-center text-gray-600 mb-4 dark:text-gray-300">
         Total vote: {totalVotes}
       </p>
 
@@ -189,14 +189,14 @@ const [hasVoted, setHasVoted] = useState(false);
 
             <button
               onClick={() => setShowResults(true)}
-              className="bg-transparent text-slate-950 font-medium text-xl"
+              className="bg-transparent text-slate-950 font-medium text-xl dark:text-white"
             >
               View results
             </button>
           </div>
         ) : (
           <button
-            className="font-semibold text-lg cursor-pointer"
+            className="font-semibold text-lg cursor-pointer dark:text-white"
             onClick={() => setShowResults(false)}
           >
             View options

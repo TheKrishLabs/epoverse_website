@@ -2,55 +2,53 @@
 
 import { privateApi, publicApi } from "@/lib/axios";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function Comments({ articleId }: { articleId: string }) {
-  const router=useRouter()
+  const router = useRouter()
   const [comments, setComments] = useState<any[]>([]);
-  
+
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     const res = await publicApi.get(`/comments/article/${articleId}`);
-    setComments(res.data.comments);   };
+    setComments(res.data.comments);
+  }, [articleId]);
 
-   fetchComments();
-   }, [articleId]);
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
-const submitComment = async (e: any) => {
-  e.preventDefault();
+  const submitComment = async (e: any) => {
+    e.preventDefault();
 
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Please login to post a comment");
-    router.push("/login");
-    return;
-  }
-  
+    if (!token) {
+      alert("Please login to post a comment");
+      router.push("/login");
+      return;
+    }
 
-  try {
-    const res = await privateApi.post(`/comments/article/${articleId}`, {
-      content
-    });
 
-    const newComment = res.data;
+    try {
+      setLoading(true);
+      await privateApi.post(`/comments/article/${articleId}`, {
+        content
+      });
 
-    setComments((prev) => [newComment, ...prev]);
+      setContent("");
+      await fetchComments();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to post comment. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-   
-    setContent("");
-
-    alert("Comment posted successfully!");
-  } catch (error) {
-    console.error(error);
-    alert("Failed to post comment. Please try again.");
-  }
-};
-
-const handleCommentChange = (e: any) => {
+  const handleCommentChange = (e: any) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -60,7 +58,7 @@ const handleCommentChange = (e: any) => {
     }
 
     setContent(e.target.value);
-}
+  }
 
   return (
     <div className="mt-16">
@@ -69,7 +67,7 @@ const handleCommentChange = (e: any) => {
 
       <textarea
         placeholder="Share your thoughts..."
-        className="w-full border rounded-lg p-4 h-28 mb-4"
+        className="w-full border rounded-lg p-4 h-28 mb-4 dark:bg-gray-800 dark:text-white dark:border-gray-700"
         value={content}
         onChange={handleCommentChange}
       />
@@ -82,16 +80,16 @@ const handleCommentChange = (e: any) => {
         {loading ? "Posting..." : "POST COMMENTS"}
       </button>
 
-    
+
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold">All Comments</h1>
+        <h1 className="text-2xl font-bold dark:text-white">All Comments</h1>
         {comments.map((c) => (
-          <div key={c._id} className="border-b pb-4 m-2"> 
-            <p className="font-semibold">{c.user?.email}</p>
-            <p className="text-gray-700">{c.content}</p>
+          <div key={c._id} className="border-b pb-4 m-2 dark:border-gray-700">
+            <p className="font-semibold dark:text-white">{c.user?.email}</p>
+            <p className="text-gray-700 dark:text-gray-300">{c.content}</p>
           </div>
         ))}
-      </div> 
+      </div>
     </div>
   );
 }

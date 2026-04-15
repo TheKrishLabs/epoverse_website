@@ -8,7 +8,7 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-950">
       <LoginModal
         isOpen={isLoginOpen}
         onLogin={() => {

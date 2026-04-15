@@ -40,12 +40,12 @@ export default async function ArticlePage({
             {article.category?.name}
           </p>
 
-          <h1 className="text-4xl font-bold leading-snug mb-4">
+          <h1 className="text-4xl font-bold leading-snug mb-4 dark:text-gray-100">
             {article.headline}
           </h1>
 
           {/* Author + Date */}
-          <div className="flex items-center gap-4 text-gray-500 mb-4">
+          <div className="flex items-center gap-4 text-gray-500 mb-4 dark:text-gray-400">
             <span>{article.author || "Admin"}</span>
             <span>
               {article.createdAt
