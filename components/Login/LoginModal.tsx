@@ -11,10 +11,12 @@ type Props = {
   isOpen: boolean;
   onLogin: () => void;
   onClose: () => void;
+  redirectTo?: string;
 };
 
-export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
+export default function LoginModal({ isOpen, onLogin, onClose, redirectTo }: Props) {
   const router = useRouter();
+  const redirectPath = redirectTo || "/";
 
   const [form, setForm] = useState({
     email: "",
@@ -88,7 +90,8 @@ export default function LoginModal({ isOpen, onLogin, onClose }: Props) {
       }
       alert("Login successful!");
 
-      router.push("/"); // redirect
+      // Ensure full page reload so Header picks up the new token
+      window.location.href = redirectPath;
       onLogin();
       onClose();
     } catch (err: any) {

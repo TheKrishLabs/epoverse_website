@@ -95,10 +95,10 @@ export default function TopWeek() {
   const main = articles[0];
   const others = articles.slice(1, 3);
   return (
-    <div className="w-full">
+    <div className="border rounded-lg p-4 shadow-sm bg-white w-full dark:bg-gray-900 dark:border-gray-700">
 
       {/* HEADER */}
-      <div className="bg-black text-white px-4 py-2 font-semibold uppercase text-sm">
+      <div className="bg-black text-white px-4 py-2 font-semibold uppercase text-sm mb-4">
         TOP WEEK
       </div>
 
@@ -161,7 +161,7 @@ export default function TopWeek() {
             className="flex gap-3 group"
           >
 
-            <div className="relative w-20 h-16 flex-shrink-0 overflow-hidden rounded">
+            <div className="relative w-20 h-16 flex-shrink-0 overflow-hidden rounded ring-1 ring-gray-100 dark:ring-gray-800">
 
               <Image
                 src={
@@ -178,7 +178,7 @@ export default function TopWeek() {
 
             <div>
 
-              <h4 className="text-sm font-medium leading-snug group-hover:text-red-500">
+              <h4 className="text-sm font-medium leading-snug group-hover:text-red-500 dark:text-gray-200">
                 {article.headline}
               </h4>
 

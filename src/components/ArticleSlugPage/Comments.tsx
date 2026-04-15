@@ -1,11 +1,12 @@
 "use client";
 
 import { privateApi, publicApi } from "@/lib/axios";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 
 export default function Comments({ articleId }: { articleId: string }) {
   const router = useRouter()
+  const pathname = usePathname()
   const [comments, setComments] = useState<any[]>([]);
 
   const [content, setContent] = useState("");
@@ -27,7 +28,7 @@ export default function Comments({ articleId }: { articleId: string }) {
 
     if (!token) {
       alert("Please login to post a comment");
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
@@ -53,7 +54,7 @@ export default function Comments({ articleId }: { articleId: string }) {
 
     if (!token) {
       alert("Please login to post a comment");
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
@@ -72,11 +73,11 @@ export default function Comments({ articleId }: { articleId: string }) {
         onChange={handleCommentChange}
       />
 
-      <button
-        onClick={submitComment}
-        disabled={loading}
-        className="bg-black text-white px-6 py-3 rounded-lg"
-      >
+        <button
+          onClick={submitComment}
+          disabled={loading}
+          className="bg-black text-white px-6 py-3 rounded-lg dark:bg-white dark:text-black"
+        >
         {loading ? "Posting..." : "POST COMMENTS"}
       </button>
 

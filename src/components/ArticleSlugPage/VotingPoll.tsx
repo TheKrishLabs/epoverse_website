@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { changeVote, createVote, getPolls } from "@/services/pollService";
 import { useRouter } from "next/navigation";
 
@@ -22,11 +23,16 @@ export default function VotingPoll() {
   const [selected, setSelected] = useState(""); // ✅ added 
   const [voting, setVoting] = useState(false);
 const [hasVoted, setHasVoted] = useState(false);
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     fetchPoll();
+    if (typeof window !== "undefined") {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    }
   }, []);
 
   const fetchPoll = async () => {
@@ -65,7 +71,7 @@ const [hasVoted, setHasVoted] = useState(false);
     const token = localStorage.getItem("token");
 
     if (!token) {
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
@@ -180,12 +186,14 @@ const [hasVoted, setHasVoted] = useState(false);
       <div className="mt-5">
         {!showResults ? (
           <div className="flex gap-4">
-            <button
-              onClick={() => router.push("/login")}
-              className="bg-red-500 text-white px-4 py-2 rounded mr-5"
-            >
-              Login
-            </button>
+            {!isLoggedIn && (
+              <button
+                onClick={() => router.push(`/login?redirect=${encodeURIComponent(pathname)}`)}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-5"
+              >
+                Login
+              </button>
+            )}
 
             <button
               onClick={() => setShowResults(true)}

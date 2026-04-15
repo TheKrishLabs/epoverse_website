@@ -1,11 +1,12 @@
 "use client";
 
 import { privateApi, publicApi } from "@/lib/axios";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function Report({ articleId }: { articleId: string }) {
   const router=useRouter()
+  const pathname = usePathname()
   const [reports, setReports] = useState<any[]>([]);  
   const [reason, setReason] = useState("");
   const [content, setContent] = useState("");
@@ -18,7 +19,7 @@ const submitReport = async (e: any) => {
 
   if (!token) {
     alert("Please login to post a comment");
-    router.push("/login");
+    router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     return;
   }
 
@@ -47,7 +48,7 @@ const handleReportChange = (e: any) => {
 
     if (!token) {
       alert("Please login to post a report");
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
@@ -60,7 +61,7 @@ const handleReportChange = (e: any) => {
 
       <h3 className="text-red-500 font-bold mb-4">REPORTS</h3>
       <select
-        className="w-full border rounded-lg p-4 mb-4"
+        className="w-full border rounded-lg p-4 mb-4 dark:bg-gray-800 dark:text-white dark:border-gray-700"
         value={reason}
         onChange={(e) => setReason(e.target.value)}
       >
@@ -76,7 +77,7 @@ const handleReportChange = (e: any) => {
 
       <textarea
         placeholder="Share your thoughts..."
-        className="w-full border rounded-lg p-4 h-28 mb-4"
+        className="w-full border rounded-lg p-4 h-28 mb-4 dark:bg-gray-800 dark:text-white dark:border-gray-700"
         value={content}
         onChange={handleReportChange}
       />
@@ -84,7 +85,7 @@ const handleReportChange = (e: any) => {
       <button
         onClick={submitReport}
         disabled={loading}
-        className="bg-black text-white px-6 py-3 rounded-lg"
+        className="bg-black text-white px-6 py-3 rounded-lg dark:bg-white dark:text-black"
       >
         {loading ? "Posting..." : "POST REPORT"}
       </button>

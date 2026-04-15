@@ -31,3 +31,14 @@
 .animate-fadeIn {
   animation: fadeIn 0.3s ease forwards;
 }
+
+/* Override rich text inline styles in dark mode */
+.dark .prose * {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Force text to inherit the smart dark mode colors, while preserving special element colors */
+.dark .prose *:not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(pre):not(code) {
+  color: inherit !important;
+}

@@ -32,9 +32,9 @@ export default function PopularPosts() {
   }, []);
 
   return (
-    <div>
+    <div className="border rounded-lg p-4 shadow-sm bg-white dark:bg-gray-900 dark:border-gray-700">
       {/* Header */}
-      <div className="bg-black text-white px-3 py-2 font-semibold">
+      <div className="bg-black text-white px-3 py-2 font-semibold text-sm">
         POPULAR POST
       </div>
 
@@ -56,7 +56,7 @@ export default function PopularPosts() {
 
               {/* Title */}
               <Link href={`/articles/${article.slug}`}>
-                <p className="text-xl font-semibold hover:text-red-500 cursor-pointer">
+                <p className="text-base font-semibold hover:text-red-500 cursor-pointer dark:text-gray-200">
                   {article.headline}
                 </p>
               </Link>

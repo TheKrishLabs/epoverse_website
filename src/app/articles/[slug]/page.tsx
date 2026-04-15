@@ -29,7 +29,7 @@ export default async function ArticlePage({
     article.image || article.thumbnail || "https://via.placeholder.com/800x400";
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-10">
+    <main className="max-w-7xl mx-auto px-4 py-10 dark:bg-gray-950">
       {/* Breadcrumb */}
       <Breadcrumb category={article.category?.name} title={article.headline} />
 
@@ -77,7 +77,7 @@ export default async function ArticlePage({
         </div>
 
         {/* RIGHT SIDEBAR */}
-        <div className="col-span-4">
+        <div className="col-span-4 space-y-8">
           <PopularPosts />
           <TopWeek/>
           <VotingPoll />
