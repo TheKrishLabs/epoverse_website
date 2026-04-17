@@ -76,13 +76,13 @@ const scrollToTop = () => {
 
             <div className="space-y-4 text-gray-300 text-sm">
               <p className="flex items-center gap-3">
-                <FaMapMarkerAlt /> Hindupur, Andhra Pradesh
+                <FaMapMarkerAlt /><span>Hindupur, Andhra Pradesh</span>
               </p>
               <p className="flex items-center gap-3">
-                <FaPhoneAlt /> +880 123 4567890
+                <FaPhoneAlt /><span>+880 123 4567890</span>
               </p>
               <p className="flex items-center gap-3">
-                <FaEnvelope /> hello@epoverse.com
+                <FaEnvelope /><span>hello@epoverse.com</span>
               </p>
             </div>
           </div>

@@ -254,10 +254,10 @@ const Header= () => {
           {/* Logo */}
           <Link
             href="/"
-            className="text-4xl font-bold flex items-center transition-all duration-300 hover:scale-50"
+            className="text-4xl font-bold flex items-center transition-transform hover:scale-105 duration-300"
           >
             <span className="text-black dark:text-white">Epo</span>
-            <span className="text-red-600">Verse.</span>
+            <span className="text-red-600 drop-shadow-sm">Verse.</span>
           </Link>
 
           {/* Ad Banner */}
@@ -282,10 +282,10 @@ const Header= () => {
       >
         <div className="w-full flex items-center justify-around">
           <ul className="flex items-center gap-8 text-white text-sm font-semibold py-4 ">
-            <li className="relative group cursor-pointer">
+            <Link href="/" className="relative group cursor-pointer block">
               <span className="group-hover:text-red-500">HOME</span>
               <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-red-500 group-hover:w-full transition-all duration-300"></span>
-            </li>
+            </Link>
 
             {categories.map((cat) => (
               <li

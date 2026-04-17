@@ -55,9 +55,9 @@ export default function ProfilePage() {
     }
   };
 
-  const updateProfile = async() => {
+  const updateProfile = async () => {
     alert("Profile update coming soon...");
-    const updatedUser =  await updateProfileDetails(user);
+    const updatedUser = await updateProfileDetails(user);
     setUser(updatedUser.user);
   }
 
@@ -79,32 +79,29 @@ export default function ProfilePage() {
       <div className="flex gap-6 mt-6 border-b">
         <button
           onClick={() => setActiveTab("articles")}
-          className={`pb-2 ${
-            activeTab === "articles"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500"
-          }`}
+          className={`pb-2 ${activeTab === "articles"
+            ? "border-b-2 border-black font-semibold"
+            : "text-gray-500"
+            }`}
         >
           My Articles
         </button>
 
         <button
           onClick={() => setActiveTab("bookmarks")}
-          className={`pb-2 ${
-            activeTab === "bookmarks"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500"
-          }`}
+          className={`pb-2 ${activeTab === "bookmarks"
+            ? "border-b-2 border-black font-semibold"
+            : "text-gray-500"
+            }`}
         >
           Saved Bookmarks
         </button>
-             <button
+        <button
           onClick={() => setActiveTab("update-profile")}
-          className={`pb-2 ${
-            activeTab === "update-profile"
-              ? "border-b-2 border-black font-semibold"
-              : "text-gray-500"
-          }`}
+          className={`pb-2 ${activeTab === "update-profile"
+            ? "border-b-2 border-black font-semibold"
+            : "text-gray-500"
+            }`}
         >
           Update Profile
         </button>
@@ -168,25 +165,48 @@ export default function ProfilePage() {
         )}
 
         {activeTab === "update-profile" && (
-          <>
-          <div className="flex flex-col" >
-            <p className="text-gray-500 mb-4">Update your profile information</p>
-            <label className="text-sm font-medium mb-1">Full Name</label>
-            <input type="text" placeholder="Full Name"
-            className="border "
-            value={user?.fullName || ""} onChange={(e) => setUser({ ...user, fullName: e.target.value })}/> 
-            <label className="text-sm font-medium mb-1">Email</label>
-            <input type="text" placeholder="Email" value={user?.email || ""} 
-            className="border"
-            onChange={(e) => setUser({ ...user, email: e.target.value })}/>
-            <label className="text-sm font-medium mb-1">Phone Number</label>
-            <input type="text" placeholder="Phone Number" value={user?.phoneNumber || ""} 
-            className="border"
-            onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}/>
-            <button className="text-blue" onClick={updateProfile}> Update</button>
+          <div className="flex flex-col max-w-lg gap-5 bg-white dark:bg-gray-900 p-6 rounded-xl border dark:border-gray-800 shadow-sm mt-4">
+            <div>
+              <h2 className="text-xl font-bold dark:text-white">Profile Details</h2>
+              <p className="text-gray-500 text-sm mt-1">Update your profile information.</p>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name</label>
+              <input type="text" placeholder="Full Name"
+                className="border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                value={user?.fullName || ""}
+                onChange={(e) => setUser({ ...user, fullName: e.target.value })}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
+              <input type="email" placeholder="Email"
+                className="border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                value={user?.email || ""}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Phone Number</label>
+              <input type="tel" placeholder="Phone Number"
+                className="border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                value={user?.phoneNumber || ""}
+                onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+              />
+            </div>
+
+            <div className="mt-2">
+              <button
+                className="bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors shadow-sm w-full md:w-auto"
+                onClick={updateProfile}
+              >
+                Save Changes
+              </button>
+            </div>
           </div>
-          </>
-          
         )}
 
       </div>

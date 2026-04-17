@@ -90,7 +90,7 @@ export default function LoginModal({ isOpen, onLogin, onClose, redirectTo }: Pro
       }
       alert("Login successful!");
 
-      // Ensure full page reload so Header picks up the new token
+      
       window.location.href = redirectPath;
       onLogin();
       onClose();
