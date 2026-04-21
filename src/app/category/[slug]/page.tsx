@@ -64,7 +64,7 @@ export default async function CategoryPage({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                   <span className="inline-flex items-center gap-1.5 bg-[#e43f3e] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1.5 shadow-md mb-4">
-                    <FaBolt /> Editor's Pick
+                    <FaBolt /> Editor&apos;s Pick
                   </span>
                   <h2 className="text-3xl md:text-4xl font-black text-white leading-tight mb-4 group-hover:text-gray-200 transition-colors tracking-tight">
                     {heroArticle.headline}

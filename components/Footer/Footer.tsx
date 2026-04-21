@@ -17,7 +17,7 @@ import { getCategories } from "@/services/categoryService";
 
 export default function Footer() {
   const [showButton, setShowButton] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<{ _id: string; slug: string; name: string }[]>([]);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
@@ -107,7 +107,7 @@ export default function Footer() {
               <h3 className="text-xl font-bold tracking-wide text-black dark:text-white">Categories</h3>
 
               <div className="flex flex-col gap-3 text-gray-600 dark:text-gray-400 text-sm font-medium">
-                {categories.map((cat: any) => (
+                {categories.map((cat) => (
                   <Link
                     key={cat._id}
                     href={`/category/${cat.slug}`}
@@ -255,10 +255,10 @@ export default function Footer() {
               </ul>
 
               <h3>4. Content Quality and Accuracy</h3>
-              <p>While we strive for the highest journalistic standards, Epoverse is provided "as is," with all faults, and we express no representations or warranties, of any kind related to our Website or the materials contained on this Website. Information may be updated without notice.</p>
+              <p>While we strive for the highest journalistic standards, Epoverse is provided &quot;as is,&quot; with all faults, and we express no representations or warranties, of any kind related to our Website or the materials contained on this Website. Information may be updated without notice.</p>
 
               <h3>5. Governing Law</h3>
-              <p>These Terms will be governed by and interpreted in accordance with the laws of the jurisdiction of Epoverse's operational headquarters, and you submit to the non-exclusive jurisdiction of the state and federal courts located therein for the resolution of any disputes.</p>
+              <p>These Terms will be governed by and interpreted in accordance with the laws of the jurisdiction of Epoverse&apos;s operational headquarters, and you submit to the non-exclusive jurisdiction of the state and federal courts located therein for the resolution of any disputes.</p>
             </div>
             <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a0a0a] rounded-b-xl flex justify-end gap-3">
               <button
