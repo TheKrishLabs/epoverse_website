@@ -42,10 +42,11 @@ export const getArticleBySlug = async (
   slug: string,
 ): Promise<Article | null> => {
   try {
-    const res = await publicApi.get(`/articles/slug/${slug}`);
+    const encodedSlug = encodeURIComponent(slug);
+    const res = await publicApi.get(`/articles/slug/${encodedSlug}`);
     return res.data.article;
-  } catch (err) {
-    console.error("Error fetching article");
+  } catch (err: any) {
+    console.error(`Error fetching article [${slug}]:`, err?.response?.data || err.message);
     return null;
   }
 };

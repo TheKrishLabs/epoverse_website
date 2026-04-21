@@ -6,7 +6,6 @@ import {
   FaInstagram,
   FaYoutube,
   FaSearch,
-  FaSun,
   FaGlobe,
   FaClock,
   FaBars,
@@ -152,26 +151,23 @@ const Header = () => {
 
   return (
     <>
-      {/* ================= TOP BAR ================= */}
-      <div className="bg-gray-100 border-b text-sm dark:bg-gray-900 dark:border-gray-700">
-        <div className="w-full flex items-center justify-between py-2 px-4 md:px-12">
-          {/* Left - Date */}
-          <div className="hidden sm:flex items-center gap-2 text-gray-600 dark:text-gray-300">
-            <FaClock className="text-gray-500 text-xs" />
+      <div className="bg-white border-b text-sm dark:bg-[#0a0a0a] dark:border-gray-800">
+        <div className="w-full max-w-[1360px] mx-auto flex items-center justify-between py-2 px-4">
+          <div className="hidden sm:flex items-center gap-2 text-gray-500 dark:text-gray-400 text-xs font-medium">
+            <FaClock className="text-xs text-gray-400" />
             <span>{formattedDate}</span>
           </div>
 
-          {/* Right */}
           <div className="flex items-center gap-3 md:gap-4 text-gray-700 dark:text-gray-300 flex-wrap">
             {!isLoggedIn && (
               <>
                 <button
                   onClick={() => setIsLoginOpen(true)}
-                  className="hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                  className="hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
                 >
                   Login
                 </button>
-                <span>|</span>
+                <span className="text-gray-300 dark:text-gray-600">|</span>
                 <Link href="/registration" className="hover:text-red-500 dark:hover:text-red-400 transition-colors">
                   Registration
                 </Link>
@@ -180,18 +176,17 @@ const Header = () => {
 
             <ThemeToggle />
 
-            {/* Language */}
             <div className="relative" ref={dropdownRef}>
               <div
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-1 border px-3 py-1 rounded-full text-xs cursor-pointer bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white dark:border-gray-600"
+                className="flex items-center gap-1 border px-3 py-1 rounded text-xs cursor-pointer bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white dark:border-gray-600"
               >
                 <FaGlobe />
                 <span>{selectedLang}</span>
               </div>
 
               {isLangOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white border rounded-md shadow-lg text-sm z-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg text-sm z-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                   <div
                     onClick={() => handleLandSelected("English")}
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
@@ -208,7 +203,6 @@ const Header = () => {
               )}
             </div>
 
-            {/* Social Icons */}
             <div className="hidden md:flex items-center gap-2 ml-2">
               <div className="bg-blue-600 text-white p-2 rounded-full text-xs cursor-pointer">
                 <FaFacebookF />
@@ -223,18 +217,18 @@ const Header = () => {
                 <FaYoutube />
               </div>
             </div>
+
             {isLoggedIn && (
               <>
                 <div className="ml-2 md:ml-10">
-                  <button onClick={logoutUser}>
-                    <LogOut />
+                  <button onClick={logoutUser} className="hover:text-red-500 transition-colors cursor-pointer">
+                    <LogOut size={20} />
                   </button>
                 </div>
-                <div className="ml-2 md:ml-10">
+                <div className="ml-2 md:ml-4">
                   <Link href="/profile">
-                    {" "}
-                    <button>
-                      <CircleUser />
+                    <button className="hover:text-red-500 transition-colors cursor-pointer">
+                      <CircleUser size={20} />
                     </button>
                   </Link>
                 </div>
@@ -244,25 +238,25 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ================= LOGO + AD SECTION ================= */}
-      <div className="bg-white dark:bg-gray-900">
-        <div className="w-full flex items-center justify-between py-3 px-4 md:px-10">
-          {/* Logo */}
+      <div className="bg-white dark:bg-gray-900 border-b-2 border-black dark:border-white">
+        <div className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4">
           <Link
             href="/"
-            className="text-2xl md:text-4xl font-bold flex items-center transition-transform hover:scale-105 duration-300"
+            className="text-4xl md:text-5xl font-black tracking-tight flex items-center transition-transform hover:scale-[1.02] duration-300 mb-4 md:mb-0"
           >
             <span className="text-black dark:text-white">Epo</span>
-            <span className="text-red-600 drop-shadow-sm">Verse.</span>
+            <span className="text-[#e43f3e]">Verse.</span>
           </Link>
 
-          {/* Ad Banner */}
-          <div className="hidden lg:flex bg-gray-300 w-[771px] h-[90px] items-center justify-center text-gray-500 text-2xl font-semibold dark:bg-gray-800 dark:text-gray-400">
-            Banner
+          <div className="hidden lg:flex bg-gray-100 dark:bg-gray-800 w-[728px] h-[90px] items-center justify-center text-gray-400 dark:text-gray-500 text-sm font-medium tracking-widest border border-gray-200 dark:border-gray-700 relative overflow-hidden">
+            <div className="absolute top-0 left-0 bottom-0 w-8 bg-[#e43f3e] flex items-center justify-center -rotate-180" style={{ writingMode: 'vertical-rl' }}>
+              <span className="text-white text-[10px] font-bold tracking-widest">AD</span>
+            </div>
+            <span className="ml-6">ADVERTISEMENT SPACE / 728 x 90</span>
           </div>
 
           <button
-            className="lg:hidden text-2xl text-gray-700 dark:text-gray-200 p-2"
+            className="lg:hidden absolute top-14 right-4 text-2xl text-gray-700 dark:text-gray-200 p-2 cursor-pointer"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <FaTimes /> : <FaBars />}
@@ -270,7 +264,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ================= NAVBAR ================= */}
       <div
         ref={navRef}
         onMouseLeave={() => {
@@ -283,11 +276,10 @@ const Header = () => {
         }}
         className="sticky top-0 z-50 bg-black relative"
       >
-        <div className="w-full hidden lg:flex items-center justify-around">
-          <ul className="flex items-center gap-8 text-white text-sm font-semibold py-4">
-            <Link href="/" className="relative group cursor-pointer block">
-              <span className="group-hover:text-red-500">HOME</span>
-              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-red-500 group-hover:w-full transition-all duration-300"></span>
+        <div className="w-full max-w-[1360px] mx-auto hidden lg:flex items-center justify-between px-4">
+          <ul className="flex items-center text-white text-[13px] font-bold py-0 h-14">
+            <Link href="/" className="relative group cursor-pointer h-full flex items-center px-4 hover:bg-[#e43f3e] transition-colors">
+              <span className="tracking-wider">HOME</span>
             </Link>
 
             {categories.map((cat) => (
@@ -295,24 +287,21 @@ const Header = () => {
                 key={cat._id}
                 onMouseEnter={() => handleHover(cat._id)}
                 onClick={() => handleCategoryClick(cat.slug)}
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer h-full flex items-center px-4 hover:bg-[#e43f3e] transition-colors border-l border-gray-800/50"
               >
-                <div className="flex items-center gap-1 group-hover:text-red-500">
-                  {cat.name.toUpperCase()}
+                <div className="flex items-center gap-1">
+                  <span className="tracking-wider">{cat.name.toUpperCase()}</span>
                   <IoIosArrowForward
-                    className={`transition-transform duration-300 ${
-                      hoveredCat === cat._id ? "rotate-90" : ""
-                    }`}
+                    className={`text-[10px] ml-1 transition-transform duration-300 ${hoveredCat === cat._id ? "rotate-90" : ""
+                      }`}
                   />
                 </div>
-
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-red-500 group-hover:w-full transition-all duration-300"></span>
               </li>
             ))}
           </ul>
 
-          <div className="bg-gray-800 p-3 rounded-full text-white hover:bg-red-500 transition">
-            <FaSearch />
+          <div className="w-14 h-14 border-l border-gray-800/50 flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#e43f3e] transition-colors cursor-pointer">
+            <FaSearch size={16} />
           </div>
         </div>
 
@@ -356,7 +345,6 @@ const Header = () => {
           </div>
         )}
 
-        {/* GLOBAL DROPDOWN */}
         {hoveredCat && (
           <div className="absolute left-0 top-full w-full bg-white shadow-2xl animate-fadeIn dark:bg-gray-900 dark:text-white">
             <div className="max-w-[1200px] mx-auto p-4 md:p-8">

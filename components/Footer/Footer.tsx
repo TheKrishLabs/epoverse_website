@@ -12,35 +12,30 @@ import {
   FaArrowUp,
 } from "react-icons/fa";
 
-
-
 const Footer: React.FC = () => {
   const [showButton, setShowButton] = React.useState(false);
 
-React.useEffect(() => {
-  const handleScroll = () => {
-    setShowButton(window.scrollY > 300);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowButton(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
   return (
     <footer className="relative bg-black text-white mt-16">
-
-      {/* Background overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-95"></div>
 
       <div className="relative max-w-[1300px] mx-auto px-6 py-14">
-
-        {/* Top Logo + Social */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-10">
           <h2 className="text-4xl font-bold">
             <span className="text-white">Epo</span>
@@ -52,7 +47,7 @@ const scrollToTop = () => {
               (Icon, index: number) => (
                 <div
                   key={index}
-                  className="w-10 h-10 flex items-center justify-center border-2 border-gray-500 rounded-full hover:border-sky-600 transition cursor-pointer"
+                  className="w-10 h-10 flex items-center justify-center border border-gray-600 rounded-full hover:border-red-500 hover:text-red-500 transition cursor-pointer"
                 >
                   <Icon />
                 </div>
@@ -63,10 +58,7 @@ const scrollToTop = () => {
 
         <hr className="border-gray-700 mb-10" />
 
-        {/* Grid Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* About Us */}
           <div className="space-y-6 md:border-r md:border-gray-700 md:pr-8">
             <h3 className="text-xl font-semibold">About Us</h3>
 
@@ -87,28 +79,25 @@ const scrollToTop = () => {
             </div>
           </div>
 
-          {/* Categories */}
           <div className="space-y-6 md:border-r md:border-gray-700 md:px-8">
             <h3 className="text-xl font-semibold">Categories</h3>
 
             <div className="grid grid-cols-2 gap-3 text-gray-300 text-sm">
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Health</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">International</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Investing</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Finance</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Technology</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Sports</p>
-              <p className="hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Movies</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Health</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">International</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Investing</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Finance</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Technology</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Sports</p>
+              <p className="hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Movies</p>
             </div>
           </div>
 
-          {/* Company */}
           <div className="space-y-6 md:border-r md:border-gray-700 md:px-8">
             <h3 className="text-xl font-semibold">Company</h3>
-            <p className="text-gray-300 text-sm hover:text-rose-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Privacy and Polices</p>
+            <p className="text-gray-300 text-sm hover:text-red-500 transition-all duration-300 hover:translate-x-1 cursor-pointer">Privacy and Policies</p>
           </div>
 
-          {/* Newsletter */}
           <div className="space-y-6 md:pl-8">
             <h3 className="text-xl font-semibold">
               Sign Up For Our Newsletter
@@ -134,23 +123,21 @@ const scrollToTop = () => {
           </div>
         </div>
 
-        {/* Bottom Strip */}
         <div className="border-t border-gray-700 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400 gap-4">
           <p className="text-center sm:text-left">Designed and Developed By krishlabs</p>
           <p>Business</p>
         </div>
       </div>
 
-      {/* Scroll to Top Button */}
       {showButton && (
-  <button
-    type="button"
-    onClick={scrollToTop}
-    className="fixed bottom-6 right-6 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition"
-  >
-    <FaArrowUp />
-  </button>
-)}
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition z-50 text-white cursor-pointer"
+        >
+          <FaArrowUp />
+        </button>
+      )}
     </footer>
   );
 };

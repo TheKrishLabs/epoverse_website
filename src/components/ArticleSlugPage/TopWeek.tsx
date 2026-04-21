@@ -76,7 +76,7 @@ export default function TopWeek() {
 
       const validArticles =
         (data?.articles || []).filter(
-          (a:Article) => !a.isDeleted && a.status === "published"
+          (a: Article) => !a.isDeleted && a.status === "published"
         );
 
       setArticles(validArticles);
@@ -92,119 +92,50 @@ export default function TopWeek() {
 
   if (!articles.length) return null;
 
-  const main = articles[0];
-  const others = articles.slice(1, 3);
-  return (
-    <div className="border rounded-lg p-4 shadow-sm bg-white w-full dark:bg-gray-900 dark:border-gray-700">
+  const top4 = articles.slice(0, 4);
 
-      {/* HEADER */}
-      <div className="bg-black text-white px-4 py-2 font-semibold uppercase text-sm mb-4">
-        TOP WEEK
+  return (
+    <div className="w-full mt-12 mb-6">
+      <div className="mb-6 flex relative">
+        <h3 className="text-[15px] font-bold text-[#e43f3e] uppercase tracking-wider py-2 border-b-[2px] border-[#e43f3e] z-10">
+          TOP WEEK
+        </h3>
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gray-200 dark:bg-gray-800 -z-0"></div>
       </div>
 
-      {/* MAIN ARTICLE */}
-      <Link href={`/articles/${main.slug}`}>
-
-        <div className="relative w-full h-64 overflow-hidden">
-
-          <Image
-  src={
-    main?.image ||
-    main?.thumbnail || main.headline
-  }
-  alt={main.headline}
-  fill
-  sizes="80px"
-  priority
-  className="object-cover hover:scale-105 transition"
-/>
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 text-white">
-
-            <span className="bg-red-600 px-3 py-1 text-xs w-fit mb-2 uppercase">
-              {main.category?.name || "OTHERS"}
-            </span>
-
-            <h3 className="font-bold text-lg leading-snug">
-              {main.headline}
-            </h3>
-
-            {/* Stats Row */}
-            <div className="flex gap-4 text-xs mt-2 opacity-90">
-
-              <span className="flex items-center gap-1">
-                <FaEye />
-                {main.views || 0}
-              </span>
-
-              <span className="flex items-center gap-1">
-                <FaRegCommentDots />
-                {main.commentsCount || 0}
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </Link>
-
-      {/* SMALL ARTICLES */}
-      <div className="space-y-4 mt-4">
-
-        {others.map((article) => (
-
-          <Link
-            key={article._id}
-            href={`/articles/${article.slug}`}
-            className="flex gap-3 group"
-          >
-
-            <div className="relative w-20 h-16 flex-shrink-0 overflow-hidden rounded ring-1 ring-gray-100 dark:ring-gray-800">
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {top4.map((article) => (
+          <div key={article._id} className="group">
+            <Link href={`/articles/${article.slug}`} className="block relative w-full h-[180px] mb-3 overflow-hidden">
               <Image
-                src={
-                  article.image ||
-                  article.thumbnail ||
-                  "/placeholder.jpg"
-                }
+                src={article.image || article.thumbnail || ""}
                 alt={article.headline}
                 fill
-                className="object-cover group-hover:scale-105 transition"
+                sizes="300px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-
-            </div>
-
-            <div>
-
-              <h4 className="text-sm font-medium leading-snug group-hover:text-red-500 dark:text-gray-200">
+              {article.category?.name && (
+                <div className="absolute bottom-0 left-0 bg-[#e43f3e] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1">
+                  {article.category.name}
+                </div>
+              )}
+            </Link>
+            <Link href={`/articles/${article.slug}`} className="block mb-2">
+              <h4 className="font-bold text-[16px] text-gray-900 dark:text-white leading-snug group-hover:text-[#e43f3e] transition-colors line-clamp-3">
                 {article.headline}
               </h4>
-
-              {/* Small Stats */}
-              <div className="flex gap-3 text-xs text-gray-500 mt-1">
-
-                <span className="flex items-center gap-1">
-                  <FaEye />
-                  {article.views || 0}
-                </span>
-
-                <span className="flex items-center gap-1">
-                  <FaRegCommentDots />
-                  {article.commentsCount || 0}
-                </span>
-
-              </div>
-
+            </Link>
+            <div className="flex items-center text-gray-500 text-[11px] font-medium gap-3">
+              <span className="flex items-center gap-1">
+                <FaEye className="mb-[1px]" /> {article.views || 0}
+              </span>
+              <span className="flex items-center gap-1">
+                <FaRegCommentDots className="mb-[1px]" /> {article.commentsCount || 0}
+              </span>
             </div>
-
-          </Link>
-
+          </div>
         ))}
-
       </div>
-
     </div>
   );
 }
