@@ -3,10 +3,12 @@
 import { privateApi, publicApi } from "@/lib/axios";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export default function Comments({ articleId }: { articleId: string }) {
   const router = useRouter()
   const pathname = usePathname()
+  const { showToast, showLoginPrompt } = useToast();
   const [comments, setComments] = useState<any[]>([]);
 
   const [content, setContent] = useState("");
@@ -27,8 +29,10 @@ export default function Comments({ articleId }: { articleId: string }) {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("Please login to post a comment");
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      showLoginPrompt({
+        message: "Please login to post a comment.",
+        onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+      });
       return;
     }
 
@@ -41,9 +45,10 @@ export default function Comments({ articleId }: { articleId: string }) {
 
       setContent("");
       await fetchComments();
+      showToast("Comment posted successfully!", "success");
     } catch (error) {
       console.error(error);
-      alert("Failed to post comment. Please try again.");
+      showToast("Failed to post comment. Please try again.", "error");
     } finally {
       setLoading(false);
     }
@@ -53,8 +58,10 @@ export default function Comments({ articleId }: { articleId: string }) {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("Please login to post a comment");
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      showLoginPrompt({
+        message: "Please login to post a comment.",
+        onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+      });
       return;
     }
 

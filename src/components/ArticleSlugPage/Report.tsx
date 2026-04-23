@@ -3,10 +3,12 @@
 import { privateApi, publicApi } from "@/lib/axios";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export default function Report({ articleId }: { articleId: string }) {
   const router=useRouter()
   const pathname = usePathname()
+  const { showToast, showLoginPrompt } = useToast();
   const [reports, setReports] = useState<any[]>([]);  
   const [reason, setReason] = useState("");
   const [content, setContent] = useState("");
@@ -18,8 +20,10 @@ const submitReport = async (e: any) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    alert("Please login to post a comment");
-    router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+    showLoginPrompt({
+      message: "Please login to submit a report.",
+      onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+    });
     return;
   }
 
@@ -36,10 +40,10 @@ const submitReport = async (e: any) => {
    
     setContent("");
 
-    alert("Report posted successfully!");
+    showToast("Report posted successfully!", "success");
   } catch (error) {
     console.error(error);
-    alert("Failed to post report. Please try again.");
+    showToast("Failed to post report. Please try again.", "error");
   }
 };
 
@@ -47,8 +51,10 @@ const handleReportChange = (e: any) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("Please login to post a report");
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      showLoginPrompt({
+        message: "Please login to submit a report.",
+        onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+      });
       return;
     }
 

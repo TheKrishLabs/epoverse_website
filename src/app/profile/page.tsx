@@ -5,10 +5,12 @@ import { getBookmarks, removeBookmark } from "@/services/bookmarkService";
 import Link from "next/link";
 import { BookmarkX } from "lucide-react";
 import { getProfileDetails, updateProfileDetails } from "@/services/profile";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("bookmarks");
   const [bookmarks, setBookmarks] = useState([]);
+  const { showToast } = useToast();
 
   const [user, setUser] = useState<any>(null);
 
@@ -49,14 +51,14 @@ export default function ProfilePage() {
         prev.filter((item: any) => item.postId._id !== postId),
       );
 
-      alert("Removed from bookmarks");
+      showToast("Removed from bookmarks", "success");
     } catch {
-      alert("Error removing bookmark");
+      showToast("Error removing bookmark", "error");
     }
   };
 
   const updateProfile = async () => {
-    alert("Profile update coming soon...");
+    showToast("Profile update coming soon...", "info");
     const updatedUser = await updateProfileDetails(user);
     setUser(updatedUser.user);
   }

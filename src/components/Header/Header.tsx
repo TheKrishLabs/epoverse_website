@@ -21,10 +21,12 @@ import MegaContent from "./MegaContent";
 import { fetchArticlesByCategoryId } from "@/services/articleService";
 import { Article } from "@/types/article";
 import LoginModal from "../../../components/Login/LoginModal";
+import RegistrationModal from "../../../components/Login/RegistrationModal";
 import { LogOut } from "lucide-react";
 import ThemeToggle from "../ThemeToggle";
 import { Category } from "@/types/category";
 import { getCategories } from "@/services/categoryService";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface HeaderProps {
   categories: any[];
@@ -32,9 +34,11 @@ interface HeaderProps {
 
 const Header = () => {
   const router = useRouter();
+  const { showConfirm } = useToast();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -139,10 +143,17 @@ const Header = () => {
     }, 200);
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
     const token = localStorage.getItem("token");
     if (token) {
-      alert("Are you sure want to logout");
+      const confirmed = await showConfirm({
+        title: "Logout",
+        message: "Are you sure you want to logout?",
+        confirmText: "Logout",
+        cancelText: "Stay",
+        variant: "danger",
+      });
+      if (!confirmed) return;
       localStorage.removeItem("token");
       setIsLoggedIn(false);
       router.push("/");
@@ -168,9 +179,12 @@ const Header = () => {
                   Login
                 </button>
                 <span className="text-gray-300 dark:text-gray-600">|</span>
-                <Link href="/registration" className="hover:text-red-500 dark:hover:text-red-400 transition-colors">
+                <button
+                  onClick={() => setIsRegistrationOpen(true)}
+                  className="hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
+                >
                   Registration
-                </Link>
+                </button>
               </>
             )}
 
@@ -360,7 +374,23 @@ const Header = () => {
           </div>
         )}
       </div>
-      <LoginModal isOpen={isLoginOpen} onLogin={() => setIsLoggedIn(true)} onClose={() => setIsLoginOpen(false)} />
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onLogin={() => setIsLoggedIn(true)} 
+        onClose={() => setIsLoginOpen(false)} 
+        onSwitchToRegister={() => {
+          setIsLoginOpen(false);
+          setIsRegistrationOpen(true);
+        }}
+      />
+      <RegistrationModal 
+        isOpen={isRegistrationOpen} 
+        onClose={() => setIsRegistrationOpen(false)} 
+        onSwitchToLogin={() => {
+          setIsRegistrationOpen(false);
+          setIsLoginOpen(true);
+        }}
+      />
     </>
   );
 };

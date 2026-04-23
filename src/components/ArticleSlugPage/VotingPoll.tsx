@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { changeVote, createVote, getPolls } from "@/services/pollService";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/ToastProvider";
 
 type Option = {
   _id: string;
@@ -20,13 +21,14 @@ type Poll = {
 export default function VotingPoll() {
   const [poll, setPoll] = useState<Poll | null>(null);
   const [showResults, setShowResults] = useState(false);
-  const [selected, setSelected] = useState(""); // ✅ added 
+  const [selected, setSelected] = useState("");
   const [voting, setVoting] = useState(false);
 const [hasVoted, setHasVoted] = useState(false);
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
+  const { showToast, showLoginPrompt } = useToast();
 
   useEffect(() => {
     fetchPoll();
@@ -43,7 +45,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     setPoll(currentPoll);
 
-    // ✅ detect previous vote
     if (currentPoll.myVote) {
       setSelected(
         currentPoll.myVote.optionId
@@ -65,13 +66,15 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const maxVotes = Math.max(...poll.options.map((o) => o.votes));
 
-  // post & change vote 
   const handleOptionSelect = async (optionId: string) => {
   try {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      showLoginPrompt({
+        message: "Please login to cast your vote.",
+        onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+      });
       return;
     }
 
@@ -80,7 +83,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
     setSelected(optionId);
 
     if (!hasVoted) {
-      // ✅ FIRST TIME → CREATE VOTE 
       setVoting(true);
       await createVote(poll._id, optionId);
       setVoting(false);
@@ -89,19 +91,17 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
       console.log("Vote created");
 
     } else {
-      // ✅ OPTION CHANGED → CHANGE VOTE
       await changeVote(poll._id, optionId);
 
     }
 
-    // Refresh poll results
     await fetchPoll();
 
     setShowResults(true);
 
   } catch (err) {
     console.error(err);
-    alert("Vote error");
+    showToast("Failed to submit vote. Please try again.", "error");
   }
 };
 
@@ -134,7 +134,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
             <div key={opt._id}>
               {/* Option Text */}
               <div className="flex items-center gap-4">
-                {/* ✅ show radio only before results */}
                 {!showResults && (
                   <input disabled={voting}
   type="radio"
@@ -188,7 +187,10 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
           <div className="flex gap-4">
             {!isLoggedIn && (
               <button
-                onClick={() => router.push(`/login?redirect=${encodeURIComponent(pathname)}`)}
+                onClick={() => showLoginPrompt({
+                  message: "Please login to cast your vote.",
+                  onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
+                })}
                 className="bg-red-500 text-white px-4 py-2 rounded mr-5"
               >
                 Login
