@@ -49,3 +49,84 @@
 .dark .prose *:not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(pre):not(code) {
   color: inherit !important;
 }
+
+/* =========================================
+   Ultra-Premium Editorial Prose Styles
+========================================= */
+.editorial-prose {
+  @apply text-gray-800 dark:text-gray-200 leading-[1.9] text-lg md:text-[1.15rem] font-medium tracking-normal;
+}
+
+/* Paragraph spacing */
+.editorial-prose p {
+  @apply mb-8;
+}
+
+/* Beautiful Drop Cap for the first paragraph */
+.editorial-prose > p:first-of-type::first-letter {
+  @apply text-[5.5rem] font-black text-[#e43f3e] float-left mr-4 mt-1 leading-[0.75] uppercase;
+}
+.editorial-prose > p:first-of-type::first-line {
+  @apply tracking-wider uppercase font-bold text-gray-900 dark:text-gray-100 text-sm md:text-base;
+}
+
+/* Elegant Pull Quotes */
+.editorial-prose blockquote {
+  @apply relative border-none bg-transparent pl-4 md:pl-10 py-2 my-14 text-2xl md:text-3xl font-black leading-tight text-gray-900 dark:text-white italic z-10;
+}
+.editorial-prose blockquote::before {
+  content: "“";
+  @apply absolute -top-8 -left-2 md:-left-4 text-8xl md:text-9xl text-red-100 dark:text-red-900/30 font-serif leading-none -z-10;
+}
+
+/* Sleek Horizontal Rules (Separator) */
+.editorial-prose hr {
+  @apply border-0 my-16 text-center overflow-visible;
+}
+.editorial-prose hr::before {
+  content: "•••";
+  @apply text-3xl font-bold text-gray-300 dark:text-gray-600 tracking-[1em] ml-[1em];
+}
+
+/* Enhanced Images */
+.editorial-prose img {
+  @apply rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] w-full my-12 transition-transform duration-700 hover:scale-[1.01] border border-gray-100 dark:border-gray-800 object-cover;
+}
+
+/* Image Captions */
+.editorial-prose figcaption {
+  @apply text-center text-sm font-medium text-gray-500 dark:text-gray-400 mt-4 italic;
+}
+
+/* Interactive Links */
+.editorial-prose a {
+  @apply font-bold text-black dark:text-white no-underline border-b-[3px] border-red-200 dark:border-red-900/50 hover:border-[#e43f3e] hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300;
+}
+
+/* Enhanced Headings */
+.editorial-prose h2, .editorial-prose h3 {
+  @apply font-black tracking-tight text-black dark:text-white mt-16 mb-6;
+}
+.editorial-prose h2 {
+  @apply text-3xl md:text-[2.5rem] leading-tight;
+}
+.editorial-prose h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+/* Beautiful Lists */
+.editorial-prose ul {
+  @apply list-none pl-0 space-y-3 my-8;
+}
+.editorial-prose li {
+  @apply relative pl-8;
+}
+.editorial-prose li::before {
+  content: "→";
+  @apply absolute left-0 text-[#e43f3e] font-bold;
+}
+
+/* Bold / Strong */
+.editorial-prose strong {
+  @apply font-black text-gray-900 dark:text-white;
+}

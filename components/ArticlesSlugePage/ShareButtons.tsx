@@ -15,10 +15,10 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
     <div className="flex gap-3">
       <button
         onClick={whatsappShare}
-        className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors font-medium shadow-sm"
+        className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition-colors font-medium shadow-sm text-sm"
       >
-        <FaWhatsapp size={20} />
-        <span className="font-medium">WhatsApp</span>
+        <FaWhatsapp size={18} />
+        <span>WhatsApp</span>
       </button>
     </div>
   );

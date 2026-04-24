@@ -111,7 +111,7 @@ export default function Footer() {
                 {categories.map((cat) => (
                   <Link
                     key={cat._id}
-                    href={`/category/${cat.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    href={`/category/${cat.slug}`}
                     className="hover:text-[#e43f3e] dark:hover:text-[#e43f3e] transition-all duration-300 hover:translate-x-1 cursor-pointer capitalize w-fit"
                   >
                     {cat.name}

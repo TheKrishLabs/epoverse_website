@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
+import { FaBookmark } from "react-icons/fa";
 import {
   saveBookmark,
   removeBookmark,
@@ -10,7 +11,7 @@ import {
 
 export default function BookmarkButton({ postId }: { postId: string }) {
   const [saved, setSaved] = useState(false);
-  const [animate, setAnimate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,8 +31,9 @@ export default function BookmarkButton({ postId }: { postId: string }) {
   };
 
   const toggleBookmark = async () => {
+    if (loading) return;
     try {
-      setAnimate(true);
+      setLoading(true);
 
       if (saved) {
         await removeBookmark(postId);
@@ -40,23 +42,33 @@ export default function BookmarkButton({ postId }: { postId: string }) {
         await saveBookmark(postId);
         setSaved(true);
       }
-
-      setTimeout(() => setAnimate(false), 200);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
       onClick={toggleBookmark}
-      className={`flex items-center gap-2 px-4 py-2 border rounded-lg transition-all font-medium
-        ${saved 
-          ? "bg-red-50 border-red-500 text-red-500 dark:bg-gray-800" 
-          : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"}`}
+      disabled={loading}
+      className={`flex items-center gap-2 text-sm font-semibold transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed
+        ${saved
+          ? "text-[#e43f3e]"
+          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}`}
     >
-      <CiBookmark size={22} className={`transition-transform duration-200 ${animate ? "scale-125" : "scale-100"} ${saved ? "text-red-500" : ""}`} />
-      <span>{saved ? "Saved" : "Save"}</span>
+      {loading ? (
+        <svg className="animate-spin h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+        </svg>
+      ) : saved ? (
+        <FaBookmark size={14} />
+      ) : (
+        <CiBookmark size={18} strokeWidth={0.5} />
+      )}
+      {!loading && <span>{saved ? "Saved" : "Save"}</span>}
     </button>
   );
 }
