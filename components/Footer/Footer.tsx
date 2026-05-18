@@ -7,8 +7,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaYoutube,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
   FaEnvelope,
   FaArrowUp,
   FaTimes,
@@ -87,14 +85,6 @@ export default function Footer() {
               </p>
 
               <div className="space-y-4 text-gray-600 dark:text-gray-400 text-sm mt-4 font-medium">
-                <p className="flex items-center gap-3">
-                  <FaMapMarkerAlt className="text-[#e43f3e] shrink-0" />
-                  <span>Hindupur, Andhra Pradesh</span>
-                </p>
-                <p className="flex items-center gap-3">
-                  <FaPhoneAlt className="text-[#e43f3e] shrink-0" />
-                  <span>+91 98765 43210</span>
-                </p>
                 <p className="flex items-center gap-3 w-full !break-words max-w-full overflow-hidden text-clip whitespace-normal pr-4">
                   <FaEnvelope className="inline-block text-[#e43f3e] shrink-0 align-middle min-w-[16px]" />
                   <span className="break-all inline-block w-[calc(100%-25px)] leading-tight align-middle text-gray-600 dark:text-gray-400 hover:text-[#e43f3e] dark:hover:text-[#e43f3e] transition-colors cursor-pointer" title="hello@epoverse.com">

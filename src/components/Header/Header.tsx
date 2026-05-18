@@ -253,7 +253,7 @@ const Header = () => {
       </div>
 
       <div className="bg-white dark:bg-gray-900 border-b-2 border-black dark:border-white">
-        <div className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4">
+        <div className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4">
           <Link
             href="/"
             className="text-4xl md:text-5xl font-black tracking-tight flex items-center transition-transform hover:scale-[1.02] duration-300 mb-4 md:mb-0"
