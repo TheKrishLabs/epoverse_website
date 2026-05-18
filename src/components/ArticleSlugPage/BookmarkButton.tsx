@@ -3,17 +3,20 @@
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaBookmark } from "react-icons/fa";
+import { useToast } from "@/components/ui/ToastProvider";
+import { useRouter, usePathname } from "next/navigation";
 import {
   saveBookmark,
   removeBookmark,
   getBookmarks,
 } from "@/services/bookmarkService";
-import { useToast } from "@/components/ui/ToastProvider";
 
 export default function BookmarkButton({ postId }: { postId: string }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { showLoginPrompt, showToast } = useToast();
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { showLoginPrompt } = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,8 +41,8 @@ export default function BookmarkButton({ postId }: { postId: string }) {
     const token = localStorage.getItem("token");
     if (!token) {
       showLoginPrompt({
-        message: "Please log in to save articles for later.",
-        onLogin: () => { window.location.href = "/login"; },
+        message: "Please login to save articles.",
+        onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
       });
       return;
     }
