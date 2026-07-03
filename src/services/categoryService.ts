@@ -3,7 +3,7 @@ import { Category, CategoryResponse } from "@/types/category";
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await publicApi.get<CategoryResponse>("/categories");
+    const res = await publicApi.get<CategoryResponse>("/categories/user");
     return res.data.categories;
   } catch (err) {
     console.error("Category API error:", err);
