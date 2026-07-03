@@ -14,9 +14,7 @@ export async function getCategories(): Promise<Category[]> {
 
   try {
 
-    const res = await publicApi.get(
-      "/categories"
-    );
+    const res = await publicApi.get("/categories/user");
 
     return res.data;
 
