@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, createContext, useContext, useCallback } from "react";
-import { X, CheckCircle, AlertTriangle, Info, XCircle } from "lucide-react";
+import { X, CheckCircle, AlertTriangle, Info, XCircle, CircleUser } from "lucide-react";
 
 type ToastType = "success" | "error" | "warning" | "info";
 
@@ -106,30 +106,29 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       </div>
 
       {confirm && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center px-4">
-          <div className="absolute inset-0 bg-black/60" onClick={() => handleConfirm(false)} />
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center px-4 p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" onClick={() => handleConfirm(false)} />
           <div
-            className="relative bg-white dark:bg-[#0a0a0a] w-full max-w-[400px] p-8 z-10 border border-gray-200 dark:border-gray-800 shadow-2xl"
+            className="relative bg-white dark:bg-[#0f0f0f] w-full max-w-[400px] p-8 z-10 rounded-2xl shadow-2xl"
             style={{ animation: "toastSlideIn 0.2s ease-out forwards" }}
           >
-            <h3 className="text-xl font-black uppercase tracking-tight text-black dark:text-white mb-2">
+            <h3 className="text-[22px] font-bold text-black dark:text-white mb-3">
               {confirm.options.title}
             </h3>
-            <div className="w-10 h-1 bg-[#e43f3e] mb-4"></div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">{confirm.options.message}</p>
+            <p className="text-[14px] text-gray-500 dark:text-gray-400 mb-8">{confirm.options.message}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => handleConfirm(false)}
-                className="flex-1 py-3 border border-gray-300 dark:border-gray-700 text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                className="flex-1 py-3 text-[14px] font-semibold text-black dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-[#1a1a1a] dark:hover:bg-gray-800 transition-colors rounded-lg"
               >
                 {confirm.options.cancelText || "Cancel"}
               </button>
               <button
                 onClick={() => handleConfirm(true)}
-                className={`flex-1 py-3 text-sm font-bold uppercase tracking-wider transition-colors ${
+                className={`flex-1 py-3 text-[14px] font-semibold transition-colors rounded-lg ${
                   confirm.options.variant === "danger"
-                    ? "bg-[#e43f3e] text-white hover:bg-black dark:hover:bg-white dark:hover:text-black"
-                    : "bg-black dark:bg-white text-white dark:text-black hover:bg-[#e43f3e] hover:text-white dark:hover:bg-[#e43f3e]"
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : "bg-black hover:bg-gray-900 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black"
                 }`}
               >
                 {confirm.options.confirmText || "Confirm"}
@@ -140,27 +139,23 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       )}
 
       {loginPrompt && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center px-4">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setLoginPrompt(null)} />
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center px-4 p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" onClick={() => setLoginPrompt(null)} />
           <div
-            className="relative bg-white dark:bg-[#0a0a0a] w-full max-w-[400px] p-8 z-10 border border-gray-200 dark:border-gray-800 shadow-2xl text-center"
+            className="relative bg-white dark:bg-[#0f0f0f] w-full max-w-[400px] p-8 z-10 rounded-2xl shadow-2xl text-center"
             style={{ animation: "toastSlideIn 0.2s ease-out forwards" }}
           >
-            <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center border-2 border-[#e43f3e]">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e43f3e" strokeWidth="2" strokeLinecap="square">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
+            <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-gray-100 dark:bg-[#1a1a1a] rounded-full">
+              <CircleUser size={32} className="text-black dark:text-white" />
             </div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-black dark:text-white mb-2">
+            <h3 className="text-[22px] font-bold text-black dark:text-white mb-2">
               Login Required
             </h3>
-            <div className="w-10 h-1 bg-[#e43f3e] mx-auto mb-4"></div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">{loginPrompt.message}</p>
+            <p className="text-[14px] text-gray-500 dark:text-gray-400 mb-8">{loginPrompt.message}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setLoginPrompt(null)}
-                className="flex-1 py-3 border border-gray-300 dark:border-gray-700 text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                className="flex-1 py-3 text-[14px] font-semibold text-black dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-[#1a1a1a] dark:hover:bg-gray-800 transition-colors rounded-lg"
               >
                 Cancel
               </button>
@@ -169,7 +164,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                   loginPrompt.onLogin();
                   setLoginPrompt(null);
                 }}
-                className="flex-1 py-3 bg-[#e43f3e] text-white text-sm font-bold uppercase tracking-wider hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors"
+                className="flex-1 py-3 bg-black hover:bg-gray-900 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black text-[14px] font-semibold transition-colors rounded-lg"
               >
                 Login
               </button>
