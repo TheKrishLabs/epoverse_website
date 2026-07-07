@@ -305,7 +305,7 @@ export default function RegistrationModal({ isOpen, onClose, onSwitchToLogin }: 
           <div className="bg-white dark:bg-[#1a1a1a] p-5 rounded-2xl shadow-sm mb-6">
             <QrCode size={140} strokeWidth={1.5} className="text-black dark:text-white" />
           </div>
-          <p className="text-[13px] text-gray-400 dark:text-gray-500 mb-1">Scan to QR</p>
+          <p className="text-[13px] text-gray-400 dark:text-gray-500 mb-1">Scan QR to</p>
           <h3 className="text-lg font-bold text-black dark:text-white leading-tight">Download the<br />Epoverse app</h3>
         </div>
       </div>
