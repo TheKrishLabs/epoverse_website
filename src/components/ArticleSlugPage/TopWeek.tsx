@@ -45,16 +45,16 @@ function TopWeekSkeleton() {
   return (
     <div className="animate-pulse space-y-4">
 
-      <div className="h-64 bg-gray-300 w-full rounded" />
+      <div className="h-64 bg-gray-300 dark:bg-gray-700 w-full rounded" />
 
       {[1, 2].map((i) => (
         <div key={i} className="flex gap-3">
 
-          <div className="w-20 h-16 bg-gray-300 rounded" />
+          <div className="w-20 h-16 bg-gray-300 dark:bg-gray-700 rounded" />
 
           <div className="flex-1 space-y-2">
-            <div className="h-3 bg-gray-300 rounded w-full" />
-            <div className="h-3 bg-gray-300 rounded w-2/3" />
+            <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded w-full" />
+            <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded w-2/3" />
           </div>
 
         </div>
