@@ -93,94 +93,213 @@
   animation: fadeIn 0.3s ease forwards;
 }
 
-/* Override rich text inline styles in dark mode */
-.dark .prose * {
+/*
+  EDITORIAL PROSE — Color mapping from reference Design Epoverse Homepage:
+
+  Reference uses these Shadcn variable-based Tailwind classes:
+  - Body paragraphs:     text-muted-foreground  (Light: #717182 / Dark: oklch(0.708 0 0) ≈ #a3a3a3)
+  - Excerpt/first para:  text-card-foreground    (Light: near-black / Dark: oklch(0.985 0 0) ≈ #f5f5f5)
+  - Headings:            text-card-foreground
+  - Blockquote text:     text-card-foreground
+  - Blockquote cite:     text-muted-foreground
+  - Links:               text-card-foreground (inherits heading context)
+  - Strong/bold:         text-card-foreground
+  - List items:          text-muted-foreground (same as body)
+  - Font:                Inter for body, Playfair Display for excerpt/blockquote
+
+  The CRITICAL issue: the rich text editor in the DB injects inline
+  style="color: rgb(...);" on elements, which overrides everything.
+  We MUST use !important on color to strip those out.
+*/
+
+/* ── Strip ALL inline colors/backgrounds from rich text editor output ── */
+.editorial-prose *,
+.editorial-prose p,
+.editorial-prose span,
+.editorial-prose div,
+.editorial-prose h1,
+.editorial-prose h2,
+.editorial-prose h3,
+.editorial-prose h4,
+.editorial-prose h5,
+.editorial-prose h6,
+.editorial-prose li,
+.editorial-prose ul,
+.editorial-prose ol,
+.editorial-prose strong,
+.editorial-prose em,
+.editorial-prose b,
+.editorial-prose i {
+  color: inherit !important;
   background-color: transparent !important;
   background: transparent !important;
+  font-family: inherit !important;
 }
 
-/* Force text to inherit the smart dark mode colors, while preserving special element colors */
-.dark .prose *:not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(pre):not(code) {
-  color: inherit !important;
-}
-
-/* =========================================
-   Ultra-Premium Editorial Prose Styles
-========================================= */
+/* ── Base: text-base text-muted-foreground leading-relaxed ── */
 .editorial-prose {
-  @apply text-gray-800 dark:text-gray-200 leading-[1.9] text-lg md:text-[1.15rem] font-medium tracking-normal;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.625;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Paragraph spacing */
+/* ── Excerpt / first paragraph: text-lg text-card-foreground font-medium ── */
+.editorial-prose > p:first-of-type {
+  color: var(--card-foreground) !important;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.625;
+  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+@media (min-width: 768px) {
+  .editorial-prose > p:first-of-type {
+    font-size: 1.25rem;
+  }
+}
+
+/* ── Paragraph spacing: mb-5 ── */
 .editorial-prose p {
-  @apply mb-8;
+  margin-bottom: 1.25rem;
 }
 
-/* Beautiful Drop Cap for the first paragraph */
-.editorial-prose > p:first-of-type::first-letter {
-  @apply text-[5.5rem] font-black text-[#e43f3e] float-left mr-4 mt-1 leading-[0.75] uppercase;
-}
-.editorial-prose > p:first-of-type::first-line {
-  @apply tracking-wider uppercase font-bold text-gray-900 dark:text-gray-100 text-sm md:text-base;
-}
-
-/* Elegant Pull Quotes */
+/* ── Blockquote: border-l-4 pl-5 py-1 my-6 bg-card rounded-r-lg pr-4 ── */
 .editorial-prose blockquote {
-  @apply relative border-none bg-transparent pl-4 md:pl-10 py-2 my-14 text-2xl md:text-3xl font-black leading-tight text-gray-900 dark:text-white italic z-10;
+  border-left: 4px solid #FF4747;
+  padding-left: 1.25rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--card);
+  border-radius: 0 0.5rem 0.5rem 0;
+  position: relative;
+  z-index: 10;
 }
 .editorial-prose blockquote::before {
-  content: "“";
-  @apply absolute -top-8 -left-2 md:-left-4 text-8xl md:text-9xl text-red-100 dark:text-red-900/30 font-serif leading-none -z-10;
+  content: none;
+}
+/* blockquote text: text-lg text-card-foreground italic */
+.editorial-prose blockquote,
+.editorial-prose blockquote p {
+  color: var(--card-foreground) !important;
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.625;
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+/* blockquote cite: text-xs text-muted-foreground */
+.editorial-prose blockquote cite {
+  color: var(--muted-foreground) !important;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  display: block;
+  font-style: normal;
 }
 
-/* Sleek Horizontal Rules (Separator) */
+/* ── Headings: font-bold text-card-foreground ── */
+.editorial-prose h1,
+.editorial-prose h2,
+.editorial-prose h3,
+.editorial-prose h4,
+.editorial-prose h5,
+.editorial-prose h6 {
+  color: var(--card-foreground) !important;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+.editorial-prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+@media (min-width: 768px) {
+  .editorial-prose h2 { font-size: 1.875rem; }
+}
+.editorial-prose h3 {
+  font-size: 1.25rem;
+}
+@media (min-width: 768px) {
+  .editorial-prose h3 { font-size: 1.5rem; }
+}
+
+/* ── Links: text-card-foreground underline hover:text-[#FF4747] ── */
+.editorial-prose a {
+  color: var(--card-foreground) !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+.editorial-prose a:hover {
+  color: #FF4747 !important;
+}
+
+/* ── Bold / Strong: text-card-foreground ── */
+.editorial-prose strong,
+.editorial-prose b {
+  font-weight: 700;
+  color: var(--card-foreground) !important;
+}
+
+/* ── Lists: text-muted-foreground ── */
+.editorial-prose ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.editorial-prose ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--muted-foreground) !important;
+  margin-bottom: 0.5rem;
+}
+.editorial-prose ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #FF4747;
+  font-weight: 700;
+}
+
+/* ── HR separator ── */
 .editorial-prose hr {
-  @apply border-0 my-16 text-center overflow-visible;
+  border: 0;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  overflow: visible;
 }
 .editorial-prose hr::before {
   content: "•••";
-  @apply text-3xl font-bold text-gray-300 dark:text-gray-600 tracking-[1em] ml-[1em];
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  letter-spacing: 1em;
+  margin-left: 1em;
 }
 
-/* Enhanced Images */
+/* ── Images ── */
 .editorial-prose img {
-  @apply rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] w-full my-12 transition-transform duration-700 hover:scale-[1.01] border border-gray-100 dark:border-gray-800 object-cover;
+  border-radius: 0.75rem;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  object-fit: cover;
 }
 
-/* Image Captions */
+/* ── Figcaption ── */
 .editorial-prose figcaption {
-  @apply text-center text-sm font-medium text-gray-500 dark:text-gray-400 mt-4 italic;
-}
-
-/* Interactive Links */
-.editorial-prose a {
-  @apply font-bold text-black dark:text-white no-underline border-b-[3px] border-red-200 dark:border-red-900/50 hover:border-[#e43f3e] hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300;
-}
-
-/* Enhanced Headings */
-.editorial-prose h2, .editorial-prose h3 {
-  @apply font-black tracking-tight text-black dark:text-white mt-16 mb-6;
-}
-.editorial-prose h2 {
-  @apply text-3xl md:text-[2.5rem] leading-tight;
-}
-.editorial-prose h3 {
-  @apply text-2xl md:text-3xl;
-}
-
-/* Beautiful Lists */
-.editorial-prose ul {
-  @apply list-none pl-0 space-y-3 my-8;
-}
-.editorial-prose li {
-  @apply relative pl-8;
-}
-.editorial-prose li::before {
-  content: "→";
-  @apply absolute left-0 text-[#e43f3e] font-bold;
-}
-
-/* Bold / Strong */
-.editorial-prose strong {
-  @apply font-black text-gray-900 dark:text-white;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-top: 1rem;
+  font-style: italic;
 }

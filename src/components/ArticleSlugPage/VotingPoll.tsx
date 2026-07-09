@@ -106,22 +106,22 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
 };
 
   return (
-    <div className="border rounded-lg p-4 shadow-sm bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-white">
+    <div className="bg-card rounded-xl p-4 border border-border text-card-foreground">
       {/* Header */}
-      <div className="bg-black text-white text-sm font-semibold px-3 py-2 mb-4">
-        VOTING POLL
-      </div>
+      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+        Voting Poll
+      </h3>
 
       {/* Question */}
-      <h3 className="font-semibold mb-2">{poll.question}</h3>
+      <h4 className="font-semibold mb-3 text-sm">{poll.question}</h4>
 
       {/* Total Votes */}
-      <p className="text-center text-gray-600 mb-4 dark:text-gray-300">
-        Total vote: {totalVotes}
+      <p className="text-xs text-muted-foreground mb-4">
+        Total votes: {totalVotes}
       </p>
 
       {/* OPTIONS */}
-      <div className="space-y-5">
+      <div className="space-y-4">
         {poll.options.map((opt) => {
           const percentage =
             totalVotes === 0
@@ -131,28 +131,29 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
           const isWinner = opt.votes === maxVotes && maxVotes !== 0;
 
           return (
-            <div key={opt._id}>
+            <div key={opt._id} className="text-sm">
               {/* Option Text */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 mb-1.5">
                 {!showResults && (
-                  <input disabled={voting}
-  type="radio"
-  name="vote"
-  value={opt._id}
-  checked={selected === opt._id}
-  onChange={() => handleOptionSelect(opt._id)}
-/>
+                  <input
+                    disabled={voting}
+                    type="radio"
+                    name="vote"
+                    value={opt._id}
+                    checked={selected === opt._id}
+                    onChange={() => handleOptionSelect(opt._id)}
+                    className="accent-primary w-3.5 h-3.5"
+                  />
                 )}
-
-                <p className="mb-1">{opt.text}</p>
+                <p className="leading-tight">{opt.text}</p>
               </div>
 
               {/* Bar */}
-              <div className="relative w-full bg-black h-2 rounded">
+              <div className="relative w-full bg-secondary h-1.5 rounded-full mt-2">
                 {showResults && (
                   <div
-                    className={`h-2 rounded ${
-                      isWinner ? "bg-red-500" : "bg-black"
+                    className={`h-1.5 rounded-full ${
+                      isWinner ? "bg-[#FF4747]" : "bg-muted-foreground"
                     }`}
                     style={{ width: `${percentage}%` }}
                   />
@@ -161,15 +162,10 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
                 {/* Percentage Badge */}
                 {showResults && (
                   <span
-                    className="absolute -top-6 text-xs bg-black text-white px-2 py-1 rounded"
+                    className="absolute -top-5 text-[10px] font-bold text-muted-foreground"
                     style={{
-                      left:
-                        percentage === 0
-                          ? "5%"
-                          : percentage === 100
-                          ? "95%"
-                          : `${percentage}%`,
-                      transform: "translateX(-50%)",
+                      left: percentage === 0 ? "0%" : percentage === 100 ? "100%" : `${percentage}%`,
+                      transform: percentage === 100 ? "translateX(-100%)" : percentage === 0 ? "translateX(0)" : "translateX(-50%)",
                     }}
                   >
                     {percentage}%
@@ -182,31 +178,30 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
       </div>
 
       {/* BUTTONS */}
-      <div className="mt-5">
+      <div className="mt-6 flex gap-4">
         {!showResults ? (
-          <div className="flex gap-4">
+          <>
             {!isLoggedIn && (
               <button
                 onClick={() => showLoginPrompt({
                   message: "Please login to cast your vote.",
                   onLogin: () => router.push(`/login?redirect=${encodeURIComponent(pathname)}`),
                 })}
-                className="bg-red-500 text-white px-4 py-2 rounded mr-5"
+                className="bg-[#FF4747] hover:bg-[#e43f3e] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors"
               >
                 Login
               </button>
             )}
-
             <button
               onClick={() => setShowResults(true)}
-              className="bg-transparent text-slate-950 font-medium text-xl dark:text-white"
+              className="text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors py-2"
             >
               View results
             </button>
-          </div>
+          </>
         ) : (
           <button
-            className="font-semibold text-lg cursor-pointer dark:text-white"
+            className="text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors py-2"
             onClick={() => setShowResults(false)}
           >
             View options
