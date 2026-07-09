@@ -35,4 +35,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDEs and Editors
 .idea/
+.vscode/
+
+# Caches
+.eslintcache
+
+# OS Files
+Thumbs.db
+
+# Additional debug
+pnpm-debug.log*
+*.log
